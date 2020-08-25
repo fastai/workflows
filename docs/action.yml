@@ -25,5 +25,5 @@ runs:
         echo "${{ inputs.SSH_CONFIG }}" > ~/.ssh/config
         chmod 400 ~/.ssh/config
         chmod 700 ~/.ssh
-        rsync -az docs/_site/ ${{ HOSTNAME }}:${{ DEST_PATH }}
+        rsync -az docs/_site/ ${{ inputs.DEST_HOSTNAME }}:${{ inputs.DEST_PATH }}
       shell: bash
