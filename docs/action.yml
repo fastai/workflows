@@ -1,5 +1,5 @@
 name: 'docs'
-description: 'deploy docs to static host'
+description: 'rsync docs to static host'
 inputs:
   ssh_key:
     description: 'private key'
@@ -10,7 +10,11 @@ inputs:
   username:
     description: 'username to use for rsync'
     required: true
-  path:
+  src_path:
+    description: 'local path to rsync files from'
+    required: false
+    default: 'docs/_site/'
+  dest_path:
     description: 'path on host to rsync files to'
     required: false
     default: ''
@@ -28,5 +32,5 @@ runs:
         echo "${{ inputs.ssh_key }}" > ~/.ssh/id_rsa
         chmod 400 ~/.ssh/id_rsa
         chmod 700 ~/.ssh
-        rsync -e "ssh -o StrictHostKeyChecking=no" -az docs/_site/ ${{ inputs.username}}@${{ inputs.hostname }}:${{ inputs.path }}
+        rsync -e "ssh -o StrictHostKeyChecking=no" -az ${{ inputs.src_path }} ${{ inputs.username}}@${{ inputs.hostname }}:${{ inputs.dest_path }}
       shell: bash
