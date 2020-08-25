@@ -7,13 +7,16 @@ inputs:
   ssh_config:
     description: 'ssh config'
     required: true
-  dest_hostname:
+  hostname:
     description: 'hostname to rsync to'
-    required: false
-    default: 'dochost'
-  dest_path:
-    description: 'part on host to rsync files to'
     required: true
+  username:
+    description: 'username to use for rsync'
+    required: true
+  path:
+    description: 'path on host to rsync files to'
+    required: false
+    default: ''
 runs:
   using: "composite"
   steps: 
@@ -27,8 +30,6 @@ runs:
         mkdir -p ~/.ssh
         echo "${{ inputs.ssh_key }}" > ~/.ssh/id_rsa
         chmod 400 ~/.ssh/id_rsa
-        echo "${{ inputs.ssh_config }}" > ~/.ssh/config
-        chmod 400 ~/.ssh/config
         chmod 700 ~/.ssh
-        rsync -az docs/_site/ ${{ inputs.dest_hostname }}:${{ inputs.dest_path }}
+        rsync -e "ssh -o StrictHostKeyChecking=no" -az docs/_site/ ${{ inputs.username}}@${{ inputs.hostname }}:${{ inputs.path }}
       shell: bash
