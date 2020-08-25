@@ -1,4 +1,4 @@
-name: 'check sync and clean nb'
+name: 'check sync nb'
 description: 'Make sure notebooks are in sync and cleaned'
 inputs:
   DUMMY:
