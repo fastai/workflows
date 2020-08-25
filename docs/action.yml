@@ -4,9 +4,6 @@ inputs:
   ssh_key:
     description: 'private key'
     required: true
-  ssh_config:
-    description: 'ssh config'
-    required: true
   hostname:
     description: 'hostname to rsync to'
     required: true
