@@ -1,5 +1,9 @@
 name: 'check notebooks'
 description: 'Conduct nbdev related tests on notebooks'
+inputs:
+  DUMMY:
+    description: 'dummy input so this workflow will work.  No input is required.'
+    required: false
 runs:
   using: "composite"
   steps: 
