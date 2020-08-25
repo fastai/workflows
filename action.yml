@@ -1,0 +1,29 @@
+name: 'docs'
+description: 'deploy docs to dreamhost'
+inputs:
+  SSH_KEY:
+    description: 'private key'
+    required: true
+  SSH_CONFIG:
+    description: 'ssh config'
+    required: true
+  HOSTNAME:
+    description: 'hostname to rysnc files to'
+    required: false
+    default: 'dreamhost'
+  DEST_PATH:
+    description: 'destination on host to rsync files to, ex docs1.fast.ai/'
+    required: true
+runs:
+  using: "composite"
+  steps: 
+    - run: |
+        export HOME=/root
+        mkdir -p ~/.ssh
+        echo "${{ inputs.SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 400 ~/.ssh/id_rsa
+        echo "${{ inputs.SSH_CONFIG }}" > ~/.ssh/config
+        chmod 400 ~/.ssh/config
+        chmod 700 ~/.ssh
+        rsync -az docs/_site/ ${{ HOSTNAME }}:${{ DEST_PATH }}
+      shell: bash
