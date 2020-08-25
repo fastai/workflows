@@ -1,6 +1,5 @@
 name: 'check notebooks'
 description: 'Conduct nbdev related tests on notebooks'
-inputs:
 runs:
   using: "composite"
   steps: 
