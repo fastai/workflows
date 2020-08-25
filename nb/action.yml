@@ -1,5 +1,5 @@
-name: 'check notebooks'
-description: 'Conduct nbdev related tests on notebooks'
+name: 'check sync and clean nb'
+description: 'Make sure notebooks are in sync and cleaned'
 inputs:
   DUMMY:
     description: 'dummy input so this workflow will work.  No input is required.'
