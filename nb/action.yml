@@ -23,7 +23,6 @@ runs:
           exit 1;
         fi
       shell: bash
-
     - name: Check that library syncs with notebooks
       id: lib
       run: |
