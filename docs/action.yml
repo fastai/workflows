@@ -7,7 +7,7 @@ inputs:
   SSH_CONFIG:
     description: 'ssh config'
     required: true
-  HOSTNAME:
+  DEST_HOSTNAME:
     description: 'hostname to rysnc files to'
     required: false
     default: 'dreamhost'
