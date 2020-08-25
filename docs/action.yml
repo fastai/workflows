@@ -17,7 +17,11 @@ inputs:
 runs:
   using: "composite"
   steps: 
-    - run: |
+    - name: install rsync
+      run: |
+        apt-get update && apt-get install -y rsync
+    - name: rsync
+      run: |
         export HOME=/root
         mkdir -p ~/.ssh
         echo "${{ inputs.SSH_KEY }}" > ~/.ssh/id_rsa
