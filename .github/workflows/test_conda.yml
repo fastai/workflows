@@ -1,0 +1,11 @@
+name: test_conda
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: fastai/workflows/conda-env#master
+      - name: Run a one-line script
+        run: echo $CONDA_PREFIX $PATH
