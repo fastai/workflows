@@ -26,6 +26,7 @@ runs:
 
         act-env CONDA_DEFAULT_ENV ${{ inputs.conda_env }}
         if [ -z ${{ inputs.conda_prefix }} ]
+        then
           act-env CONDA_NAME ${{ inputs.conda_name }}
           act-env CONDA_PATH $HOME/$CONDA_NAME
           if [ $CONDA_DEFAULT_ENV==base ]
