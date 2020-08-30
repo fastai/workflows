@@ -1,6 +1,6 @@
 # conda-env
 
-This is a GitHub Action that lets you use conda in your environment. If you're using miniconda3 and the base environment, you've got nothing to change. Otherwise, set these additional parameters as needed:
+This is a GitHub Action that lets you use conda in your workflow. If you're using miniconda3 and the base environment, you've got nothing to change. Otherwise, set these additional parameters as needed:
 
 - `conda_env` (default - base): Environment to activate
 - `conda_env` (default - miniconda3): Name of your base conda folder (normally `miniconda3` or `anaconda3`)
