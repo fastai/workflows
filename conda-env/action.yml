@@ -1,7 +1,7 @@
 name: 'conda-env'
 description: 'Set up conda env'
 inputs:
-  conda_env: 'base'
+  conda_env:
     description: 'name of conda environment'
     required: false
     default: 'base'
