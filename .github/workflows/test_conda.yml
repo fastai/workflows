@@ -6,6 +6,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: fastai/workflows/conda-env#master
+      - uses: fastai/workflows/conda-env@master
       - name: Run a one-line script
         run: echo $CONDA_PREFIX $PATH
