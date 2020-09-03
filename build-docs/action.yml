@@ -13,7 +13,6 @@ inputs:
 runs:
   using: "composite"
   steps: 
-    - uses: fastai/workflows/conda-env@master
     - name: Create docs
       env:
         JEKYLL_ENV: 'production'
