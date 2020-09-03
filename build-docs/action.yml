@@ -1,44 +1,29 @@
 name: 'conda-env'
 description: 'Set up conda env'
 inputs:
-  conda_env:
-    description: 'name of conda environment'
-    required: false
-    default: 'base'
-  conda_prefix:
-    description: 'full path to conda directory'
-    required: false
-    default: ''
-  conda_name:
-    description: 'name of conda folder (miniconda3 or anaconda3)'
-    required: false
-    default: miniconda3
+  username:
+    description: 'rsync user'
+    required: true
+  hostname:
+    description: 'rsync host'
+    required: true
+  dest_path:
+    description: 'path to rsync to'
+    required: true
 runs:
   using: "composite"
   steps: 
-    - name: Set up conda env
-      shell: bash
+    - uses: fastai/workflows/conda-env@master
+    - name: Create docs
+      env:
+        JEKYLL_ENV: 'production'
+        SSH_KEY: ${{ secrets.DH_KEY }}
       run: |
-        act-env () {
-          printf -v $1 $2
-          echo "::set-env name=$1::$2"
-        }
-
-        act-env CONDA_DEFAULT_ENV ${{ inputs.conda_env }}
-        if [ -z ${{ inputs.conda_prefix }} ]
-        then
-          act-env CONDA_NAME ${{ inputs.conda_name }}
-          act-env CONDA_PATH $HOME/$CONDA_NAME
-          if [ $CONDA_DEFAULT_ENV==base ]
-          then
-            act-env CONDA_PREFIX $CONDA_PATH
-          else
-            act-env CONDA_PREFIX $CONDA_PATH/envs/$CONDA_DEFAULT_ENV
-          fi
-        fi
-
-        act-env CONDA_BIN $CONDA_PREFIX/bin
-        act-env PATH $CONDA_BIN:$PATH
-        act-env CONDA_EXE $CONDA_BIN/conda
-        act-env CONDA_PYTHON_EXE $CONDA_BIN/python
-
+        cp -r docs_src docs
+        nbdev_build_docs
+        cd docs 
+        bundle i
+        bundle exec jekyll build --strict_front_matter
+        echo "$SSH_KEY" > ~/.ssh/id_rsa
+        chmod 400 ~/.ssh/id_rsa
+        rsync -az _site/ ${{ username }}@${{ hostname }}:${{ dest_path }}/
