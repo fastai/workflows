@@ -10,13 +10,16 @@ inputs:
   dest_path:
     description: 'path to rsync to'
     required: true
+   ssh_key:
+    required: true
 runs:
   using: "composite"
+  shell: bash
   steps: 
     - name: Create docs
       env:
         JEKYLL_ENV: 'production'
-        SSH_KEY: ${{ secrets.DH_KEY }}
+        SSH_KEY: ${{ inputs.ssh_key }}
       run: |
         cp -r docs_src docs
         nbdev_build_docs
@@ -25,4 +28,4 @@ runs:
         bundle exec jekyll build --strict_front_matter
         echo "$SSH_KEY" > ~/.ssh/id_rsa
         chmod 400 ~/.ssh/id_rsa
-        rsync -az _site/ ${{ username }}@${{ hostname }}:${{ dest_path }}/
+        rsync -az _site/ ${{ inputs.username }}@${{ inputs.hostname }}:${{ inputs.dest_path }}/
