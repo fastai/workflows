@@ -1,4 +1,4 @@
-name: 'conda-env'
+name: 'build-docs'
 description: 'Set up conda env'
 inputs:
   username:
@@ -10,7 +10,8 @@ inputs:
   dest_path:
     description: 'path to rsync to'
     required: true
-   ssh_key:
+  ssh_key:
+    description: "SSH key for rsync" 
     required: true
 runs:
   using: "composite"
