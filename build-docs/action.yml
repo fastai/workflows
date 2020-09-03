@@ -14,9 +14,9 @@ inputs:
     required: true
 runs:
   using: "composite"
-  shell: bash
   steps: 
     - name: Create docs
+      shell: bash
       env:
         JEKYLL_ENV: 'production'
         SSH_KEY: ${{ inputs.ssh_key }}
