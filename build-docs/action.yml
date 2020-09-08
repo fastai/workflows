@@ -1,5 +1,5 @@
 name: 'build-docs'
-description: 'Set up conda env'
+description: 'Create docs with nbdev'
 inputs:
   username:
     description: 'rsync user'
