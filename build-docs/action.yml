@@ -23,6 +23,7 @@ runs:
         SSH_KEY: ${{ inputs.ssh_key }}
       run: |
         cp -r docs_src docs
+        pip install -Uqq nbdev fastcore
         nbdev_build_docs
         cd docs 
         bundle i
