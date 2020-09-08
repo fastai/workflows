@@ -24,7 +24,7 @@ runs:
       run: |
         cp -r docs_src docs
         pip install -Uqq nbdev fastcore
-        pip install -e .[dev]
+        pip install -qq -e .[dev]
         nbdev_build_docs
         cd docs 
         bundle i
