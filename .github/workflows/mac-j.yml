@@ -13,18 +13,18 @@ jobs:
       with:
         ssh_key: ${{ secrets.DH_KEY }}
     - run |
-      wget http://www.jsoftware.com/download/j901/install/j901_mac64.zip
-      unzip j*.zip
-      cd j*
-      bin/jconsole -js << EOF
-      load 'pacman'
-      'install' jpkg '*'
-      exit 0
-      EOF
-      cd ..
-      tar czf j901-mac.tgz j901
-    - name: Upload
-      uses: actions/upload-artifact@v2
-      with:
-        name: j-mac
-        path: j901-mac.tgz
+        wget http://www.jsoftware.com/download/j901/install/j901_mac64.zip
+        unzip j*.zip
+        cd j*
+        bin/jconsole -js << EOF
+        load 'pacman'
+        'install' jpkg '*'
+        exit 0
+        EOF
+        cd ..
+        tar czf j901-mac.tgz j901
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: j-mac
+          path: j901-mac.tgz
