@@ -23,8 +23,8 @@ jobs:
         EOF
         cd ..
         tar czf j901-mac.tgz j901
-      - name: Upload
-        uses: actions/upload-artifact@v2
-        with:
-          name: j-mac
-          path: j901-mac.tgz
+    - name: Upload
+      uses: actions/upload-artifact@v2
+      with:
+        name: j-mac
+        path: j901-mac.tgz
