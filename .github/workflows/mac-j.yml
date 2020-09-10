@@ -23,9 +23,9 @@ jobs:
         exit 0
         EOF
         cd ..
-        tar czf j901-mac.tgz j901
+        #tar czf j901-mac.tgz j901
     - name: Upload
       uses: actions/upload-artifact@v2
       with:
         name: j-mac
-        path: j901-mac.tgz
+        path: j901
