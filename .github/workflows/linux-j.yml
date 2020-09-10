@@ -16,6 +16,7 @@ jobs:
       run: |
         wget http://www.jsoftware.com/download/j901/install/j901_linux64.tar.gz
         tar xf j*.tar.gz
+        rm j*.tar.gz
         cd j*
         bin/jconsole -js << EOF
         load 'pacman'
