@@ -23,9 +23,10 @@ jobs:
         exit 0
         EOF
         cd ..
-        #tar czf j901-mac.tgz j901
+        tar czf j901-mac.tgz j901
+        scp j901-mac.tgz jeremyphoward@ps625762.dreamhostps.com:files.fast.ai/files/
     - name: Upload
       uses: actions/upload-artifact@v2
       with:
-        name: j-mac
-        path: j901
+        name: j-mac.tgz
+        path: j901-mac.tgz
