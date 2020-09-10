@@ -1,0 +1,16 @@
+name: 'ssh'
+description: 'get an ssh terminal'
+inputs:
+  ssh_key:
+    description: 'private key'
+    required: true
+runs:
+  using: "composite"
+  steps: 
+    - name: keys
+      shell: bash
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ inputs.ssh_key }}" > ~/.ssh/id_rsa
+        chmod 400 ~/.ssh/id_rsa
+        chmod 700 ~/.ssh
