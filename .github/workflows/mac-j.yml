@@ -14,8 +14,8 @@ jobs:
         ssh_key: ${{ secrets.DH_KEY }}
     - name: create tar
       run: |
-        wget http://www.jsoftware.com/download/j901/install/j901_mac64.zip
-        unzip j*.zip
+        wget -q http://www.jsoftware.com/download/j901/install/j901_mac64.zip
+        unzip -q j*.zip
         cd j*
         bin/jconsole -js << EOF
         load 'pacman'
