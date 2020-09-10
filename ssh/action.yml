@@ -14,3 +14,15 @@ runs:
         echo "${{ inputs.ssh_key }}" > ~/.ssh/id_rsa
         chmod 400 ~/.ssh/id_rsa
         chmod 700 ~/.ssh
+        cat << EOF > ~/.ssh/config
+        Host *
+            ServerAliveInterval 60
+            StrictHostKeyChecking no
+
+        Host github.com
+            User git
+            Port 22
+            Hostname github.com
+            TCPKeepAlive yes
+            IdentitiesOnly yes
+        EOF
