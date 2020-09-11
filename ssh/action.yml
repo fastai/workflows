@@ -4,6 +4,10 @@ inputs:
   ssh_key:
     description: 'private key'
     required: true
+  key_file:
+    description: 'ssh key file name'
+    default: 'id_rsa'
+    required: false
 runs:
   using: "composite"
   steps: 
@@ -12,7 +16,7 @@ runs:
       run: |
         mkdir -p ~/.ssh
         echo "${{ inputs.ssh_key }}" > ~/.ssh/id_rsa
-        chmod 400 ~/.ssh/id_rsa
+        chmod 400 ~/.ssh/${{ inputs.key_file }}
         chmod 700 ~/.ssh
         cat << EOF > ~/.ssh/config
         Host *
