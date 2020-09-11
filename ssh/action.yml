@@ -15,7 +15,7 @@ runs:
       shell: bash
       run: |
         mkdir -p ~/.ssh
-        echo "${{ inputs.ssh_key }}" > ~/.ssh/id_rsa
+        echo "${{ inputs.ssh_key }}" > ~/.ssh/${{ inputs.key_file }}
         chmod 400 ~/.ssh/${{ inputs.key_file }}
         chmod 700 ~/.ssh
         cat << EOF > ~/.ssh/config
@@ -30,4 +30,3 @@ runs:
             TCPKeepAlive yes
             IdentitiesOnly yes
         EOF
-        rm -f ~/.ssh/id_rsa.pub
