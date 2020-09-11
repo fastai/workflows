@@ -26,3 +26,4 @@ runs:
             TCPKeepAlive yes
             IdentitiesOnly yes
         EOF
+        rm -f ~/.ssh/id_rsa.pub
