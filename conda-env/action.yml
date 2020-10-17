@@ -21,7 +21,7 @@ runs:
       run: |
         act-env () {
           printf -v $1 $2
-          echo "::set-env name=$1::$2"
+          echo "$1=$2" >> $GITHUB_ENV
         }
 
         act-env CONDA_DEFAULT_ENV ${{ inputs.conda_env }}
