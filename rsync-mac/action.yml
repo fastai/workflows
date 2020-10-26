@@ -28,7 +28,7 @@ runs:
       shell: bash
     - name: rsync
       run: |
-        export HOME=/root
+        # export HOME=/root
         mkdir -p ~/.ssh
         echo "${{ inputs.ssh_key }}" > ~/.ssh/id_rsa
         chmod 400 ~/.ssh/id_rsa
