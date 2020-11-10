@@ -32,5 +32,5 @@ runs:
         echo "${{ inputs.ssh_key }}" > ~/.ssh/id_rsa
         chmod 400 ~/.ssh/id_rsa
         chmod 700 ~/.ssh
-        rsync -e "ssh -o StrictHostKeyChecking=no" -az ${{ inputs.src_path }} ${{ inputs.username}}@${{ inputs.hostname }}:${{ inputs.dest_path }}
+        rsync --delete -e "ssh -o StrictHostKeyChecking=no" -az ${{ inputs.src_path }} ${{ inputs.username}}@${{ inputs.hostname }}:${{ inputs.dest_path }}
       shell: bash
