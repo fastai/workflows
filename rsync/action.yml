@@ -27,11 +27,14 @@ runs:
   steps: 
     - name: install rsync
       run: |
-        apt-get update && apt-get install -y rsync
+        [[ "$OSTYPE" == "darwin"* ]] && brew install upx
+        [[ "$OSTYPE" == "linux"* ]] && apt-get update && apt-get install -y rsync
       shell: bash
     - name: rsync
       run: |
-        export HOME=/root
+        cd
+        export HOME=`pwd`
+        cd -
         mkdir -p ~/.ssh
         echo "${{ inputs.ssh_key }}" > ~/.ssh/id_rsa
         chmod 400 ~/.ssh/id_rsa
