@@ -26,6 +26,7 @@ runs:
         JEKYLL_ENV: 'production'
         SSH_KEY: ${{ inputs.ssh_key }}
       run: |
+        set -x
         cp -r docs_src docs
         pip install -Uqq nbdev fastcore
         pip install -qq -e .[dev]
@@ -36,3 +37,4 @@ runs:
         echo "$SSH_KEY" > ~/.ssh/id_rsa
         chmod 400 ~/.ssh/id_rsa
         rsync $(echo ${delete:+'--delete'}) -az _site/ ${{ inputs.username }}@${{ inputs.hostname }}:${{ inputs.dest_path }}/
+        set +x
