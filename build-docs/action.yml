@@ -27,6 +27,7 @@ runs:
         SSH_KEY: ${{ inputs.ssh_key }}
       run: |
         set -x
+        delete="${{ inputs.ssh_key }}"
         cp -r docs_src docs
         pip install -Uqq nbdev fastcore
         pip install -qq -e .[dev]
