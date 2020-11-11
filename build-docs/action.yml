@@ -13,6 +13,10 @@ inputs:
   ssh_key:
     description: "SSH key for rsync" 
     required: true
+  delete:
+    description: "Toggle the --delete flag on or off for rsync.  Set to any value to enable.  Disabled by default."
+    required: false
+    default: ''
 runs:
   using: "composite"
   steps: 
@@ -31,4 +35,4 @@ runs:
         bundle exec jekyll build --strict_front_matter
         echo "$SSH_KEY" > ~/.ssh/id_rsa
         chmod 400 ~/.ssh/id_rsa
-        rsync -az _site/ ${{ inputs.username }}@${{ inputs.hostname }}:${{ inputs.dest_path }}/
+        rsync $(echo ${delete:+'--delete'}) -az _site/ ${{ inputs.username }}@${{ inputs.hostname }}:${{ inputs.dest_path }}/
