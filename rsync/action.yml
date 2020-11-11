@@ -27,7 +27,7 @@ runs:
   steps: 
     - name: install rsync
       run: |
-        [[ "$OSTYPE" == "darwin"* ]] && brew install upx
+        [[ "$OSTYPE" == "darwin"* ]] && brew install rsync
         [[ "$OSTYPE" == "linux"* ]] && apt-get update && apt-get install -y rsync
       shell: bash
     - name: rsync
