@@ -1,5 +1,4 @@
 from github import Github, UnknownObjectException, Repository
-from fastlinkcheck import link_check
 from fastcore.all import *
 from fastcore.script import SCRIPT_INFO
 
