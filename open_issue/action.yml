@@ -16,6 +16,7 @@ runs:
       run: |
         pwd
         ls
+      shell: bash
 #     - name: Python
 #       run: |
 #         from foo import bar
