@@ -7,6 +7,9 @@ inputs:
 runs:
   using: "composite"
   steps: 
+    - name: path
+      run: ls $/
+      shell: bash
     - name: Python
       run: |
         from foo import bar
