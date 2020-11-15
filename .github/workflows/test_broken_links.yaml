@@ -4,6 +4,7 @@ on: [workflow_dispatch]
 jobs:
   test:
     strategy:
+      fail-fast: false
       matrix:
         exit_on_found: ["", true]
     runs-on: ubuntu-latest
