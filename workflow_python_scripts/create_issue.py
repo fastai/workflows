@@ -24,6 +24,8 @@ def create_issue(repo:str, title:str, body:str, token:str, skip_if_exists=False)
     candidate_issues = [i for i in get_issues(repo=repo, state='open', token=token)]
     print(f"candidate issue titles: {[i.title.strip() for i in candidate_issues]}")
     incumbent_issue = first([i for i in candidate_issues if i.title.strip() == title.strip()])
+    print(f"title: {title}")
+    print(f"incumbent_issue: {incumbent_issue}")
     if incumbent_issue and skip_if_exists: 
         issue = incumbent_issue
         new_issue_created = False
