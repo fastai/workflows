@@ -2,21 +2,23 @@ on: [workflow_dispatch]
 
 jobs:
   test:
+    strategy:
+      matrix:
+        skip: ["", true]
     runs-on: ubuntu-latest
     name: test-open-issue
     steps:
     - uses: actions/setup-python@v2
-    - name: where are we?
-      run: |
-        pwd
-        ls
-    - uses: actions/checkout@master
-    - name: where are we?
-      run: |
-        pwd
-        ls
     - uses: fastai/workflows/open_issue@master
-    - name: where are we?
+      id: open_issue
+      with:
+        repo: ${{ github.env.GITHUB_REPOSITORY }}
+        title: "Test Open Issue"
+        body: "Test Body"
+        token: ${{ secrets.GITHUB_TOKEN }}
+        skip_if_exists_flag: ${{ matrix.skip }}
+    - name: check outputs
       run: |
-        pwd
-        ls
+        echo bool_new_issue_created ${{ steps.open_issue.outputs.bool_new_issue_created }} 
+        echo related_issue_num ${{ steps.open_issue.outputs.related_issue_num }}
+        echo related_issue_url ${{ steps.open_issue.outputs.related_issue_url }} 
