@@ -16,7 +16,7 @@ jobs:
           pip install fastlinkcheck
           errs=$(link_check _example)
           export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-          gh issue create -t "test issue from gh" -b "$errs"
+          gh issue create -t "test issue from gh" -b "$errs" -R ${{ github.repository }}
 
 # jobs:
 #   test:
