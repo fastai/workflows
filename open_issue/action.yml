@@ -44,6 +44,6 @@ runs:
                      title="${{ inputs.title }}",
                      body="${{ inputs.body }}",
                      token="${{ inputs.token }}",
-                     skip_if_exists="${{ inputs.skip_if_exists }}")
+                     skip_if_exists="${{ inputs.skip_if_exists_flag }}")
       shell: python
  
