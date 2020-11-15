@@ -18,7 +18,7 @@ def get_issues(repo:str=None, state:str='open', token:str=None):
     return [i for i in get_repo(repo).get_issues(state=state)]
     
  
-def create_issue(repo:str, title:str, body:str, token:str, skip_if_exists=True):
+def create_issue(repo:str, title:str, body:str, token:str, skip_if_exists=False):
     "Create an issue and optionally ignore if an open issue with the same title already exists"
     r = get_repo(repo=repo, token=token)
     incumbent_issue = first([i for i in get_issues(repo=repo, state='open', token=token) if i.title.strip() == title.strip()])
