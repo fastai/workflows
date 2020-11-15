@@ -16,7 +16,7 @@ jobs:
           repository: 'fastai/fastlinkcheck'  
       - uses: actions/setup-python@v2
       - name: check for broken links
-        run:
+        run: |
           pip install fastlinkcheck
           link_check _example >> errors
           gh -h
