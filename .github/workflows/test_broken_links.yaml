@@ -25,6 +25,20 @@ jobs:
           echo "logs_broken_links: ${LINK_LOGS}"
         env:
           LINK_LOGS: "${{ steps.links.outputs.logs_broken_links }}"  
+      - uses: fastai/workflows/open_issue@master
+        if: steps.links.outputs.bool_broken_links == 'True'
+        id: open_issue
+        with:
+          repo: 'fastai/fastlinkcheck' #${{ github.repository }}
+          title: "[Actions Test] Test Open Issue"
+          body: "${{ steps.links.outputs.logs_broken_links }}"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          skip_if_exists_flag: "yes"
+      - name: check outputs
+        run: |
+          echo bool_new_issue_created ${{ steps.open_issue.outputs.bool_new_issue_created }} 
+          echo related_issue_num ${{ steps.open_issue.outputs.related_issue_num }}
+          echo related_issue_url ${{ steps.open_issue.outputs.related_issue_url }} 
 # jobs:
 #   test:
 #     strategy:
