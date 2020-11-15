@@ -16,7 +16,8 @@ jobs:
         with:
           path: "_example"
       - name: check outputs
-        run: echo "hello"
+        run: |
+          echo "hello"
 #           echo "hello"
 #           # echo bool_broken_links "${{ steps.links.outputs.bool_broken_links }}"
 #           # echo logs_broken_links "${{ steps.links.outputs.logs_broken_links }}"
