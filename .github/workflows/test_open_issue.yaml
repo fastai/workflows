@@ -6,7 +6,6 @@ jobs:
     strategy:
       matrix:
         skip: ["", true]
-        repo: ["", ${{ github.repository }}]
     runs-on: ubuntu-latest
     name: test-open-issue
     steps:
@@ -14,7 +13,7 @@ jobs:
     - uses: fastai/workflows/open_issue@master
       id: open_issue
       with:
-        repo: ${{ matrix.repo }}
+        repo: ${{ github.repository }}
         title: "Test Open Issue"
         body: "Test Body"
         token: ${{ secrets.GITHUB_TOKEN }}
