@@ -4,7 +4,7 @@ inputs:
   repo:
     description: "The owner/repo that you want to open an issue in.  For example 'fastai/fastai'"
     required: true
-    default: ${{ github.env.repository }}
+    default: ${{ github.repository }}
   title:
     description: 'Issue Title'
     required: true
