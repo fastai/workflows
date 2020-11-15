@@ -20,6 +20,9 @@ outputs:
   bool_broken_links: 
     description: "Returns 'True' or 'False' depending on if broken links were found."
     value: ${{ steps.links.outputs.bool_broken_links }}
+  logs_broken_links:
+    description: "Returns the raw logs which list all of the broken links and their locations."
+    value: ${{ steps.links.outputs.logs_broken_links }}
 runs:
   using: "composite"
   steps: 
@@ -35,10 +38,5 @@ runs:
                         host="${{ inputs.host }}", 
                         config_file="${{ inputs.config_file }}", 
                         actions_output=True, print_logs=True)
-        with open('temp_linkcheck_action_logs.txt', 'w') as f: f.write(repr(lm))
-        run("echo 'BROKEN_LINKS_LOGS<<EOF' >> $GITHUB_ENV")
-        run("cat temp_linkcheck_action_logs.txt >> $GITHUB_ENV")
-        run("echo 'EOF' >> $GITHUB_ENV")
         if lm and "${{ inputs.exit_on_found }}": sys.exit(1)
       shell: python
- 
