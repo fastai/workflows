@@ -35,7 +35,6 @@ runs:
       run: |
         import sys
         from fastlinkcheck import link_check
-        from fastcore.utils import run
         lm = link_check(path="${{ inputs.path }}", 
                         host="${{ inputs.host }}", 
                         config_file="${{ inputs.config_file }}", 
