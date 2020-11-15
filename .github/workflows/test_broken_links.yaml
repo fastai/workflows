@@ -14,7 +14,7 @@ jobs:
       - name: check for broken links
         run: |
           pip install fastlinkcheck
-          errs = $(link_check _example)
+          errs=$(link_check _example)
           gh issue create -t "test issue from gh" -b "$errs"
 
 # jobs:
