@@ -1,5 +1,5 @@
 name: 'Check for broken links'
-description: 'TODO'
+description: 'Checks for broken links in HTML documents. This occurs in parallel so performance is fast. Both external links and internal links are checked. Internal links are checked by verifying local files. See https://github.com/fastai/fastlinkcheck for more information.'
 inputs:
   path:
     description: 'Directory relative to the root of yoru repo to search recursively for HTML files'
@@ -19,7 +19,10 @@ inputs:
 outputs:
   bool_broken_links: 
     description: "Returns 'True' or 'False' depending on if broken links were found."
-    value: ${{ steps.links.outputs.broken_links }}
+    value: ${{ steps.links.outputs.bool_broken_links }}
+  logs_broken_links: 
+    description: "Logs that contain a list of all the broken links found.
+    value: ${{ steps.links.outputs.logs_broken_links }}
 runs:
   using: "composite"
   steps: 
@@ -34,6 +37,6 @@ runs:
                         host="${{ inputs.host }}", 
                         config_file="${{ inputs.config_file }}", 
                         actions_output=True, print_logs=True)
-        if lm and exit_on_found: sys.exit(1)
+        if lm and "${{ inputs.exit_on_found }}": sys.exit(1)
       shell: python
  
