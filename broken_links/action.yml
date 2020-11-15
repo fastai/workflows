@@ -21,7 +21,7 @@ outputs:
     description: "Returns 'True' or 'False' depending on if broken links were found."
     value: ${{ steps.links.outputs.bool_broken_links }}
   logs_broken_links: 
-    description: "Logs that contain a list of all the broken links found.
+    description: "Logs that contain a list of all the broken links found."
     value: ${{ steps.links.outputs.logs_broken_links }}
 runs:
   using: "composite"
