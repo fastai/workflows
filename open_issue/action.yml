@@ -1,6 +1,9 @@
 name: 'Open issue'
 description: 'Open an issue, but optionally skip if an existing issue with the same title already exists'
 inputs:
+  repo:
+    description: "The owner/repo that you want to open an issue in.  For example 'fastai/fastai'"
+    required: true
   title:
     description: 'Issue Title'
     required: true
@@ -9,9 +12,6 @@ inputs:
     required: true
   token:
     description: 'GitHub Token'
-    required: true
-  body:
-    description: 'Issue Body'
     required: true
   skip_if_exists_flag:
     description: 'Setting this to any value will result in not an opening a new issue if there is an existing issue with the same title.'
@@ -39,7 +39,7 @@ runs:
       id: issue
       run: |
         from create_issue import create_issue
-        create_issue(repo=${{}},
+        create_issue(repo=${{ inputs.repo }},
                      title="${{ inputs.title }}",
                      body="${{ inputs.body }}",
                      token="${{ inputs.token }}",
