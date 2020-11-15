@@ -7,6 +7,16 @@ jobs:
     steps:
     - uses: actions/setup-python@v2
     - name: where are we?
-      run: pwd
+      run: |
+        pwd
+        ls
+    - uses: actions/checkout@master
+    - name: where are we?
+      run: |
+        pwd
+        ls
     - uses: fastai/workflows/open_issue@master
-      
+    - name: where are we?
+      run: |
+        pwd
+        ls
