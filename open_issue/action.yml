@@ -14,7 +14,6 @@ inputs:
   token:
     description: 'GitHub Token'
     required: true
-    default: ${{ secrets.GITHUB_TOKEN }}
   skip_if_exists_flag:
     description: 'Setting this to any value will result in not an opening a new issue if there is an existing issue with the same title.'
     required: false
