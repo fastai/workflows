@@ -34,7 +34,7 @@ runs:
       run: |
         git clone https://github.com/fastai/workflows.git --depth 1
         echo "PYTHONPATH=${PYTHONPATH}:$(pwd)/workflows/workflow_python_scripts" >> $GITHUB_ENV
-        pip install fastcore fastlinkcheck PyGithub
+        pip install fastcore PyGithub
       shell: bash
     - name: Create Issue
       id: issue
