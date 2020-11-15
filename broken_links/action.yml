@@ -26,9 +26,7 @@ outputs:
 runs:
   using: "composite"
   steps: 
-    - run: |
-        pip install fastlinkcheck
-        chmod -R u+r "${{ inputs.path }}"
+    - run: pip install fastlinkcheck && chmod -R u+r ${{ inputs.path }}
       shell: bash
     - name: Find broken links
       id: links
