@@ -1,1 +1,19 @@
-#TODO
+name: 'check sync nb'
+description: 'Make sure notebooks are in sync and cleaned'
+inputs:
+  DUMMY:
+    description: 'dummy input so this workflow will work.  No input is required.'
+    required: false
+runs:
+  using: "composite"
+  steps: 
+    - name: Python
+      run: |
+        from foo import bar
+        bar()
+      shell: python
+    - name: Check if notebooks are clean
+      id: clean
+      run: |
+        echo "Hello"
+      shell: bash
