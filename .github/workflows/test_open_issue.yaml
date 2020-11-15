@@ -6,5 +6,7 @@ jobs:
     name: test-open-issue
     steps:
     - uses: actions/setup-python@v2
+    - name: where are we?
+      run: pwd
     - uses: fastai/workflows/open_issue@master
       
