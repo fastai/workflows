@@ -3,23 +3,41 @@ on: [workflow_dispatch]
 
 jobs:
   test:
-    strategy:
-      matrix:
-        skip: ["", true]
     runs-on: ubuntu-latest
-    name: test-open-issue
+    name: test-broken-link
     steps:
-    - uses: actions/setup-python@v2
-    - uses: fastai/workflows/open_issue@master
-      id: open_issue
-      with:
-        repo: ${{ github.repository }}
-        title: "Test Open Issue"
-        body: "Test Body"
-        token: ${{ secrets.GITHUB_TOKEN }}
-        skip_if_exists_flag: ${{ matrix.skip }}
-    - name: check outputs
-      run: |
-        echo bool_new_issue_created ${{ steps.open_issue.outputs.bool_new_issue_created }} 
-        echo related_issue_num ${{ steps.open_issue.outputs.related_issue_num }}
-        echo related_issue_url ${{ steps.open_issue.outputs.related_issue_url }} 
+      - uses: actions/checkout@master
+        with:
+          repository: 'fastai/fastlinkcheck'  
+      - uses: actions/setup-python@v2
+      - name: check for broken links
+        id: links
+        uses: fastai/workflows/broken_links@master
+        with:
+          path: "_example"
+      - name: check outputs
+        run: |
+          echo bool_broken_links ${{ steps.links.outputs.bool_broken_links }} 
+          echo logs_broken_links ${{ steps.links.outputs.logs_broken_links }}
+# jobs:
+#   test:
+#     strategy:
+#       matrix:
+#         skip: ["", true]
+#     runs-on: ubuntu-latest
+#     name: test-open-issue
+#     steps:
+#     - uses: actions/setup-python@v2
+#     - uses: fastai/workflows/open_issue@master
+#       id: open_issue
+#       with:
+#         repo: ${{ github.repository }}
+#         title: "Test Open Issue"
+#         body: "Test Body"
+#         token: ${{ secrets.GITHUB_TOKEN }}
+#         skip_if_exists_flag: ${{ matrix.skip }}
+#     - name: check outputs
+#       run: |
+#         echo bool_new_issue_created ${{ steps.open_issue.outputs.bool_new_issue_created }} 
+#         echo related_issue_num ${{ steps.open_issue.outputs.related_issue_num }}
+#         echo related_issue_url ${{ steps.open_issue.outputs.related_issue_url }} 
