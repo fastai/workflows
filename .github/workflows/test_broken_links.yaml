@@ -3,6 +3,9 @@ on: [workflow_dispatch]
 
 jobs:
   test:
+    strategy:
+      matrix:
+        exit_on_found: ["", true]
     runs-on: ubuntu-latest
     name: test-broken-link
     steps:
@@ -15,6 +18,7 @@ jobs:
         uses: fastai/workflows/broken_links@master
         with:
           path: "_example"
+          exit_on_found: ${{ matrix.exit_on_found }} 
       - name: check outputs
         run: |
           echo bool_broken_links: "${{ steps.links.outputs.bool_broken_links }}"
