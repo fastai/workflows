@@ -19,7 +19,6 @@ jobs:
         run: |
           echo bool_broken_links ${{ steps.links.outputs.bool_broken_links }} 
           echo logs_broken_links ${{ steps.links.outputs.logs_broken_links }}
-          echo BROKEN_LINKS_LOGS $BROKEN_LINKS_LOGS
 # jobs:
 #   test:
 #     strategy:
