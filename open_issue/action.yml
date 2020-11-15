@@ -8,7 +8,9 @@ runs:
   using: "composite"
   steps: 
     - name: path
-      run: bash $/test.sh
+      run: |
+        ls
+        bash test.sh
       shell: bash
     - name: Python
       run: |
