@@ -7,19 +7,18 @@ inputs:
 runs:
   using: "composite"
   steps: 
-    - name: path
+    - name: change folders
+      run: |
+        mkdir fastaiworkflow_temp_files
+        cd fastaiworkflow_temp_files
+      shell: bash
+    - name: see path
       run: |
         pwd
         ls
-        bash test.sh
-      shell: bash
-    - name: Python
-      run: |
-        from foo import bar
-        bar()
-      shell: python
-    - name: Check if notebooks are clean
-      id: clean
-      run: |
-        echo "Hello"
-      shell: bash
+#     - name: Python
+#       run: |
+#         from foo import bar
+#         bar()
+#       shell: python
+
