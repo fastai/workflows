@@ -30,7 +30,7 @@ jobs:
         if: steps.links.outputs.bool_broken_links == 'True'
         id: open_issue
         with:
-          repo: 'fastai/fastlinkcheck' #${{ github.repository }}
+          repo: ${{ github.repository }}
           title: "[Actions Test] Test Open Issue"
           body: "${{ steps.links.outputs.logs_broken_links }}"
           token: ${{ secrets.GITHUB_TOKEN }}
