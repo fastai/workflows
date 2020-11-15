@@ -9,17 +9,16 @@ runs:
   steps: 
     - name: change folders
       run: |
-        mkdir fastaiworkflow_temp_files
-        cd fastaiworkflow_temp_files
+        git clone https://github.com/fastai/workflows.git --depth 1
+        echo "PYTHONPATH=${PYTHONPATH}:$(pwd)/workflows/open_issue" >> $GITHUB_ENV
       shell: bash
     - name: see path
       run: |
         pwd
         ls
       shell: bash
-#     - name: Python
-#       run: |
-#         from foo import bar
-#         bar()
-#       shell: python
-
+    - name: Python
+      run: |
+        from foo import bar
+        bar()
+      shell: python
