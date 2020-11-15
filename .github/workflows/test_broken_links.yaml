@@ -4,10 +4,6 @@ on: [workflow_dispatch]
 
 jobs:
   test:
-    strategy:
-      fail-fast: false
-      matrix:
-        exit_on_found: ["", true]
     runs-on: ubuntu-latest
     name: test-broken-link
     steps:
@@ -18,8 +14,8 @@ jobs:
       - name: check for broken links
         run: |
           pip install fastlinkcheck
-          link_check _example >> errors
-          gh -h
+          errs = $(link_check _example)
+          gh issue create -t "test issue from gh" -b "$errs"
 
 # jobs:
 #   test:
