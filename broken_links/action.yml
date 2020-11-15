@@ -7,15 +7,15 @@ inputs:
   host:
     description: 'Host and path (without protocol) of web server.'
     required: false
-    default: ''
+    default: ""
   config_file:
     description: 'Location of file with urls to ignore.'
     required: false
-    default: ''
+    default: ""
   exit_on_found:
     description: 'Setting this to any value will result in this step exiting with a status code of 1 if broken links are found.'
     required: false
-    default: ''
+    default: ""
 outputs:
   bool_broken_links: 
     description: "Returns 'True' or 'False' depending on if broken links were found."
