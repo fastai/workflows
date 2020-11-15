@@ -13,7 +13,7 @@ jobs:
     - uses: fastai/workflows/open_issue@master
       id: open_issue
       with:
-        repo: ${{ github.env.GITHUB_REPOSITORY }}
+        repo: ${{ github.env.repository }}
         title: "Test Open Issue"
         body: "Test Body"
         token: ${{ secrets.GITHUB_TOKEN }}
