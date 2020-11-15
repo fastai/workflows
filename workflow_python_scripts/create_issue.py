@@ -13,12 +13,12 @@ def get_repo(repo:str=None, token=None) -> Repository:
     except UnknownObjectException as e:
         raise Exception(f'Repo: `{repo}` not found. If this is a private repo make sure you provide an appropriate token\n {e}')
         
- def get_issues(repo:str=None, state:str='open', token:str=None):
+def get_issues(repo:str=None, state:str='open', token:str=None):
     "Get all issues for a repository"
     return [i for i in get_repo(repo).get_issues(state=state)]
     
  
- def create_issue(repo:str, title:str, body:str, token:str, skip_if_exists=True):
+def create_issue(repo:str, title:str, body:str, token:str, skip_if_exists=True):
     "Create an issue and optionally ignore if an open issue with the same title already exists"
     r = get_repo(repo=repo, token=token)
     incumbent_issue = first([i for i in get_issues(repo=repo, state='open', token=token) if i.title.strip() == title.strip()])
