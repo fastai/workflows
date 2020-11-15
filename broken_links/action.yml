@@ -26,7 +26,7 @@ outputs:
 runs:
   using: "composite"
   steps: 
-    - run: 
+    - run: |
         pip install fastlinkcheck
         chmod -R u+r "${{ inputs.path }}"
       shell: bash
