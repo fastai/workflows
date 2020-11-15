@@ -18,7 +18,9 @@ jobs:
       - name: check outputs
         run: |
           echo bool_broken_links: "${{ steps.links.outputs.bool_broken_links }}"
-          echo logs_broken_links: "${{ steps.links.outputs.logs_broken_links }}"
+          echo "logs_broken_links: ${LINK_LOGS}"
+        env:
+          LINK_LOGS: "${{ steps.links.outputs.logs_broken_links }}"  
 # jobs:
 #   test:
 #     strategy:
