@@ -25,11 +25,11 @@ runs:
       env:
         JEKYLL_ENV: 'production'
         SSH_KEY: ${{ inputs.ssh_key }}
+        delete="${{ inputs.delete }}"
       run: |
-        delete="${{ inputs.ssh_key }}"
         cp -r docs_src docs
-        pip install -Uqq nbdev fastcore
-        pip install -qq -e .[dev]
+        pip install -Uq nbdev fastcore
+        pip install -q -e .[dev]
         nbdev_build_docs
         cd docs 
         bundle i
