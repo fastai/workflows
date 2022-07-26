@@ -10,7 +10,9 @@ runs:
         python -m pip install --upgrade pip
         pip install -U --pre nbdev
         pip install -e ".[dev]"
+      shell: bash
     - run: nbdev_docs
+      shell: bash
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:

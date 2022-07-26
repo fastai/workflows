@@ -27,9 +27,10 @@ runs:
         python -m pip install --upgrade pip
         pip install -U --pre nbdev
         pip install -e ".[dev]"
-    - run: nbdev_docs
-    - name: Create docs
       shell: bash
+    - run: nbdev_docs
+      shell: bash
+    - name: Create docs
       env:
         JEKYLL_ENV: 'production'
         SSH_KEY: ${{ inputs.ssh_key }}
@@ -38,4 +39,5 @@ runs:
         echo "$SSH_KEY" > ~/.ssh/id_rsa
         chmod 400 ~/.ssh/id_rsa
         rsync $(echo ${delete:+'--delete'}) -az _docs/ ${{ inputs.username }}@${{ inputs.hostname }}:${{ inputs.dest_path }}/
+      shell: bash
 
