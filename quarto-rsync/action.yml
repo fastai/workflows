@@ -29,6 +29,7 @@ runs:
         mkdir _docs
         touch _docs/foo
         rsync $(echo ${delete:+'--delete'}) -az _docs/ ${{ inputs.username }}@${{ inputs.hostname }}:${{ inputs.dest_path }}/foo
+      shell: bash
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v3
     - name: Install Dependencies
