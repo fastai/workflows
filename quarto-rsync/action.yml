@@ -21,34 +21,27 @@ runs:
   using: "composite"
   steps: 
     - name: Setup ssh
+      env:
+        SSH_KEY: ${{ inputs.ssh_key }}
       run: |
         mkdir -p ~/.ssh
+        chmod 700 ~/.ssh
         echo "$SSH_KEY" > ~/.ssh/id_rsa
-        chmod -R 400 ~/.ssh
-        ls -la ~/.ssh
-        mkdir _docs
-        touch _docs/foo
-        rsync $(echo ${delete:+'--delete'}) -az _docs/ ${{ inputs.username }}@${{ inputs.hostname }}:${{ inputs.dest_path }}/foo
+        chmod 600 ~/.ssh/id_rsa
       shell: bash
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v3
     - name: Install Dependencies
       run: |
-        mkdir -p ~/.ssh
-        echo "$SSH_KEY" > ~/.ssh/id_rsa
-        chmod -R 400 ~/.ssh
         python -m pip install --upgrade pip
         pip install -U --pre nbdev
         pip install -e ".[dev]"
       shell: bash
     - name: Create docs
       env:
-        SSH_KEY: ${{ inputs.ssh_key }}
         delete: "${{ inputs.delete }}"
       run: |
-        #nbdev_docs
-        mkdir _docs
-        touch _docs/foo
-        rsync $(echo ${delete:+'--delete'}) -az _docs/ ${{ inputs.username }}@${{ inputs.hostname }}:${{ inputs.dest_path }}/foo
+        nbdev_docs
+        rsync $(echo ${delete:+'--delete'}) -az _docs/ ${{ inputs.username }}@${{ inputs.hostname }}:${{ inputs.dest_path }}/
       shell: bash
 
