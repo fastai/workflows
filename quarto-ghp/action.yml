@@ -1,0 +1,26 @@
+name: 'build-docs'
+description: 'Create docs with nbdev'
+runs:
+  using: "composite"
+  steps: 
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v3
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -U --pre nbdev
+        pip install -e ".[dev]"
+    - run: nbdev_docs
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        force_orphan: true
+        publish_dir: ./_docs
+        # The following lines assign commit authorship to the official
+        # GH-Actions bot for deploys to `gh-pages` branch.
+        # You can swap them out with your own user credentials.
+        user_name: github-actions[bot]
+        user_email: 41898282+github-actions[bot]@users.noreply.github.com
+
+
