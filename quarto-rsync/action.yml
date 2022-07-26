@@ -24,20 +24,21 @@ runs:
     - uses: actions/setup-python@v3
     - name: Install Dependencies
       run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_KEY" > ~/.ssh/id_rsa
+        chmod -R 400 ~/.ssh
         python -m pip install --upgrade pip
         pip install -U --pre nbdev
         pip install -e ".[dev]"
       shell: bash
     - name: Create docs
       env:
-        JEKYLL_ENV: 'production'
         SSH_KEY: ${{ inputs.ssh_key }}
         delete: "${{ inputs.delete }}"
       run: |
-        nbdev_docs
-        mkdir -p ~/.ssh
-        echo "$SSH_KEY" > ~/.ssh/id_rsa
-        chmod -R 400 ~/.ssh
-        rsync $(echo ${delete:+'--delete'}) -az _docs/ ${{ inputs.username }}@${{ inputs.hostname }}:${{ inputs.dest_path }}/
+        #nbdev_docs
+        mkdir _docs
+        touch _docs/foo
+        rsync $(echo ${delete:+'--delete'}) -az _docs/ ${{ inputs.username }}@${{ inputs.hostname }}:${{ inputs.dest_path }}/foo
       shell: bash
 
