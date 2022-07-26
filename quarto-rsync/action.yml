@@ -20,6 +20,15 @@ inputs:
 runs:
   using: "composite"
   steps: 
+    - name: Setup ssh
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_KEY" > ~/.ssh/id_rsa
+        chmod -R 400 ~/.ssh
+        ls -la ~/.ssh
+        mkdir _docs
+        touch _docs/foo
+        rsync $(echo ${delete:+'--delete'}) -az _docs/ ${{ inputs.username }}@${{ inputs.hostname }}:${{ inputs.dest_path }}/foo
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v3
     - name: Install Dependencies
