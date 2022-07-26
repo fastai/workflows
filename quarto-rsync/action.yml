@@ -27,7 +27,8 @@ runs:
         mkdir -p ~/.ssh
         chmod 700 ~/.ssh
         echo "$SSH_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
+        echo -e 'Host *\n  StrictHostKeyChecking no' > ~/.ssh/config
+        chmod 600 ~/.ssh/*
       shell: bash
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v3
