@@ -3,7 +3,8 @@ description: 'Create docs with nbdev'
 inputs:
   ghtoken:
     description: 'GitHub token'
-    required: true
+    default: ${{ github.token }}
+    required: false
 runs:
   using: "composite"
   steps: 
