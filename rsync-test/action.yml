@@ -1,5 +1,5 @@
-name: 'quarto-rsync'
-description: 'Create docs with nbdev'
+name: 'test-rsync'
+description: 'Test rsync'
 inputs:
   username:
     description: 'rsync user'
@@ -30,19 +30,10 @@ runs:
         echo -e 'Host *\n  StrictHostKeyChecking no' > ~/.ssh/config
         chmod 600 ~/.ssh/*
       shell: bash
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v3
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -U --pre nbdev
-        pip install -e ".[dev]"
-      shell: bash
-    - name: Create docs
+    - name: Test
       env:
         delete: "${{ inputs.delete }}"
       run: |
-        nbdev_docs
         rsync $(echo ${delete:+'--delete'}) -az _docs/ ${{ inputs.username }}@${{ inputs.hostname }}:${{ inputs.dest_path }}/
       shell: bash
 
