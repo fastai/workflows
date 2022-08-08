@@ -29,4 +29,12 @@ runs:
         git status -s # display the status to see which nbs need cleaning up
         if [ -n "$(git status -uno -s)" ]; then echo -e "!!! Detected unstripped out notebooks\n!!!Remember to run nbdev_install_hooks"; false; fi
         nbdev_test
+    - name: Check if notebooks are synced
+      shell: bash
+      run: |
+        nbdev_export
+        if [ -n "$(git status -uno -s)" ]; then
+          echo "::error::Detected notebooks and library are not in sync.  Please run `nbdev_export`."
+          exit 1;
+        fi
 
