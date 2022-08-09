@@ -1,6 +1,10 @@
 name: 'nbdev-ci'
 description: 'Test with nbdev'
 inputs:
+  pre:
+    description: 'Install prerelease nbdev/execnb from master?'
+    required: false
+    default: ''
   version:
     description: 'Version of python to set up'
     required: false
@@ -16,12 +20,19 @@ runs:
         cache: "pip"
         cache-dependency-path: settings.ini
     - name: Install deps, check cleaned, and test
+      env:
+        USE_PRE: ${{ inputs.pre }}
       shell: bash
       run: |
         python -m pip install --upgrade pip
-        pip install -U nbdev
+        if [ $USE_PRE ]; then
+          pip install -U git+https://github.com/fastai/fastcore.git
+          pip install -U git+https://github.com/fastai/execnb.git
+          pip install -U git+https://github.com/fastai/nbdev.git
+        else
+          pip install -U nbdev
+        fi
         pip install -qe ".[dev]"
-        pip install -U git+https://github.com/fastai/execnb.git
         echo "Check we are starting with clean git checkout"
         if [ -n "$(git status -uno -s)" ]; then echo "git status is not clean"; false; fi
         echo "Trying to strip out notebooks"
