@@ -19,7 +19,7 @@ runs:
         python-version: ${{ inputs.version }}
         cache: "pip"
         cache-dependency-path: settings.ini
-    - name: Install deps, check cleaned, and test
+    - name: Install deps, check cleaned
       env:
         USE_PRE: ${{ inputs.pre }}
       shell: bash
