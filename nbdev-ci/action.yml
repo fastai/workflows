@@ -21,7 +21,6 @@ runs:
         python -m pip install --upgrade pip
         pip install -U nbdev
         pip install -qe ".[dev]"
-        pip install -U git+https://github.com/fastai/execnb.git
         echo "Check we are starting with clean git checkout"
         if [ -n "$(git status -uno -s)" ]; then echo "git status is not clean"; false; fi
         echo "Trying to strip out notebooks"
