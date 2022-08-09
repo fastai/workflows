@@ -17,8 +17,8 @@ runs:
     - uses: actions/setup-python@v3
       with:
         python-version: ${{ inputs.version }}
-#         cache: "pip"
-#         cache-dependency-path: settings.ini
+        cache: "pip"
+        cache-dependency-path: settings.ini
     - name: Install deps, check cleaned
       env:
         USE_PRE: ${{ inputs.pre }}
