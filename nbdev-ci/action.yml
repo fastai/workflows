@@ -45,7 +45,8 @@ runs:
       run: |
         nbdev_export
         if [ -n "$(git status -uno -s)" ]; then
-          echo "::error::Notebooks and library are not in sync.  Please run `nbdev_export`."
+          echo "::error::Notebooks and library are not in sync.  Please run nbdev_export."
+          git status -uno -s
           exit 1;
         fi
     - name: Test Notebooks
