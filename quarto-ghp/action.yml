@@ -29,7 +29,7 @@ runs:
         fi
         pip install -e ".[dev]"
         # Use prerelease until v1.1 available
-        wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.1.75/quarto-1.1.75-linux-amd64.deb
+        wget -nv https://github.com/quarto-dev/quarto-cli/releases/download/v1.1.75/quarto-1.1.75-linux-amd64.deb
         sudo dpkg -i quarto*.deb
         nbdev_docs
     - name: Deploy to GitHub Pages
