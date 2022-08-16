@@ -28,8 +28,10 @@ runs:
           pip install -U --pre nbdev
         fi
         pip install -e ".[dev]"
-    - run: nbdev_docs
-      shell: bash
+        # Use prerelease until v1.1 available
+        wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.1.75/quarto-1.1.75-linux-amd64.deb
+        dpkg -i quarto*.deb
+        nbdev_docs
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
