@@ -25,7 +25,7 @@ runs:
           pip install -U git+https://github.com/fastai/execnb.git
           pip install -U git+https://github.com/fastai/nbdev.git
         else
-          pip install -U --pre nbdev
+          pip install -U nbdev
         fi
         pip install -e ".[dev]"
         # Use prerelease until v1.1 available
