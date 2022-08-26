@@ -35,7 +35,7 @@ runs:
         pip install -qe ".[dev]"
         echo "Check we are starting with clean git checkout"
         if [[ `git status --porcelain -uno` ]]; then
-          git status -uno
+          git diff
           echo "git status is not clean"
           false
         fi
