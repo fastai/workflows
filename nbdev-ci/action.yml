@@ -19,7 +19,7 @@ runs:
         python-version: ${{ inputs.version }}
         cache: "pip"
         cache-dependency-path: settings.ini
-    - name: Install deps, check cleaned
+    - name: Test with nbdev
       env:
         USE_PRE: ${{ inputs.pre }}
       shell: bash
@@ -34,24 +34,18 @@ runs:
         fi
         pip install -qe ".[dev]"
         echo "Check we are starting with clean git checkout"
-        #git update-index --assume-unchanged */_modidx.py
-        if [ -n "$(git status -uno -s)" ]; then echo "git status is not clean"; false; fi
+        if [[ `git status --porcelain -uno` ]]; then echo "git status is not clean"; false; fi
         echo "Trying to strip out notebooks"
         nbdev_clean
         echo "Check that strip out was unnecessary"
         git status -s # display the status to see which nbs need cleaning up
-        if [ -n "$(git status -uno -s)" ]; then echo -e "!!! Detected unstripped out notebooks\n!!!Remember to run nbdev_install_hooks"; false; fi
-    - name: Check if notebooks are synced
-      shell: bash
-      run: |
+        if [[ `git status --porcelain -uno` ]]; then echo -e "!!! Detected unstripped out notebooks\n!!!Remember to run nbdev_install_hooks"; false; fi
         nbdev_export
-        if [ -n "$(git status -uno -s)" ]; then
+        if [[ `git status --porcelain -uno` ]]; then
           echo "::error::Notebooks and library are not in sync.  Please run nbdev_export."
           git status -uno -s
           git diff
           exit 1;
         fi
-    - name: Test Notebooks
-      shell: bash      
-      run: nbdev_test
+        nbdev_test
 
