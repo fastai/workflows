@@ -33,7 +33,7 @@ runs:
         sudo dpkg -i quarto*.deb
         nbdev_docs
     - uses: actions/configure-pages@v2    
-    - uses: actions/upload-pages-artifact
+    - uses: actions/upload-pages-artifact@v1
       with:
         path: "./_docs"
     - uses: actions/deploy-pages@v1
