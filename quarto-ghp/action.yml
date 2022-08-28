@@ -34,7 +34,8 @@ runs:
         nbdev_docs
     - uses: actions/configure-pages@v2    
     - uses: actions/upload-pages-artifact
-      path: "./_docs"
+      with:
+        path: "./_docs"
     - uses: actions/deploy-pages@v1
 #     - name: Deploy to GitHub Pages
 #       uses: peaceiris/actions-gh-pages@v3
