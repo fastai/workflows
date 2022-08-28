@@ -33,15 +33,18 @@ runs:
         sudo dpkg -i quarto*.deb
         nbdev_docs
     - uses: actions/configure-pages@v2    
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ inputs.ghtoken }}
-        force_orphan: true
-        publish_dir: ./_docs
-        # The following lines assign commit authorship to the official
-        # GH-Actions bot for deploys to `gh-pages` branch.
-        # You can swap them out with your own user credentials.
-        user_name: github-actions[bot]
-        user_email: 41898282+github-actions[bot]@users.noreply.github.com
+    - uses: actions/upload-pages-artifact
+      path: "./_docs"
+    - uses: actions/deploy-pages@v1
+#     - name: Deploy to GitHub Pages
+#       uses: peaceiris/actions-gh-pages@v3
+#       with:
+#         github_token: ${{ inputs.ghtoken }}
+#         force_orphan: true
+#         publish_dir: ./_docs
+#         # The following lines assign commit authorship to the official
+#         # GH-Actions bot for deploys to `gh-pages` branch.
+#         # You can swap them out with your own user credentials.
+#         user_name: github-actions[bot]
+#         user_email: 41898282+github-actions[bot]@users.noreply.github.com
 
