@@ -9,6 +9,16 @@ inputs:
     description: 'GitHub token'
     default: ${{ github.token }}
     required: false
+outputs:
+  description:
+    description: "Description of the repo"
+    value: ${{ steps.metadata.outputs.description }}
+  keywords:
+    description: "Keywords associated with the python package"
+    value: "${{ steps.metadata.outputs.keywords }}"
+  docs_url:
+    description: "The URL for the docs"
+    value: ${{ steps.metadata.outputs.docs_url }}
 runs:
   using: "composite"
   steps: 
@@ -44,6 +54,7 @@ runs:
         user_name: github-actions[bot]
         user_email: 41898282+github-actions[bot]@users.noreply.github.com
     - name: emit metadata # this information can be used by downstream steps
+      id: metadata
       run: |
         from nbdev.config import get_config
         from json import dumps
