@@ -39,7 +39,8 @@ runs:
         from nbdev.config import get_config
         cfg = get_config()
         api = GhApi(owner=cfg.user, repo=cfg.repo, token="${{inputs.ghtoken}}")
-        api.enable_pages(branch='gh-pages')
+        res = api.enable_pages(branch='gh-pages')
+        print(res)
       shell: python
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
