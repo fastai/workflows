@@ -35,8 +35,8 @@ runs:
     - name: Enable GitHub Pages
       shell: python
       run: |
-        import GhApi,nbdev.config
-        GhApi(owner=nbdev.config.get_config().user, repo=nbdev.config.get_config().repo, token="${{inputs.ghtoken}}").enable_pages(branch='gh-pages')
+        import ghapi.core,nbdev.config
+        ghapi.core.GhApi(owner=nbdev.config.get_config().user, repo=nbdev.config.get_config().repo, token="${{inputs.ghtoken}}").enable_pages(branch='gh-pages')
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
