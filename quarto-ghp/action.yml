@@ -32,14 +32,6 @@ runs:
         wget -nv https://github.com/quarto-dev/quarto-cli/releases/download/v1.1.75/quarto-1.1.75-linux-amd64.deb
         sudo dpkg -i quarto*.deb
         nbdev_docs
-    - uses: actions/configure-pages@v2        
-    
-# In the future, this should replace the last step.  However this doesn't work right now, perhaps because of the org workflow
-#     - uses: actions/upload-pages-artifact@v1
-#       with:
-#         path: "./_docs"
-#     - uses: actions/deploy-pages@v1
-
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
@@ -51,4 +43,12 @@ runs:
         # You can swap them out with your own user credentials.
         user_name: github-actions[bot]
         user_email: 41898282+github-actions[bot]@users.noreply.github.com
-
+    - name: emit metadata
+      run: |
+        from nbdev.config import get_config
+        from json import dumps
+        cfg = get_config()
+        print(f'::set-output name=description::{cfg.description}')
+        print(f'::set-output name=keywords::{dumps(cfg.keywords.split())}')
+        print(f'::set-output name=docs_url::{cfg.doc_host}/{cfg.doc_baseurl}')
+      shell: python
