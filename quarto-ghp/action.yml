@@ -43,7 +43,7 @@ runs:
         # You can swap them out with your own user credentials.
         user_name: github-actions[bot]
         user_email: 41898282+github-actions[bot]@users.noreply.github.com
-    - name: emit metadata
+    - name: emit metadata # this information can be used by downstream steps
       run: |
         from nbdev.config import get_config
         from json import dumps
