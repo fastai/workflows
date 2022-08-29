@@ -12,13 +12,13 @@ inputs:
 outputs:
   description:
     description: "Description of the repo"
-    value: ${{ steps.metadata.outputs.description }}
+    value: "${{ steps.metadata.outputs.description }}"
   keywords:
     description: "Keywords associated with the python package"
     value: "${{ steps.metadata.outputs.keywords }}"
   docs_url:
     description: "The URL for the docs"
-    value: ${{ steps.metadata.outputs.docs_url }}
+    value: "${{ steps.metadata.outputs.docs_url }}"
 runs:
   using: "composite"
   steps: 
