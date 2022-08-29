@@ -9,7 +9,6 @@ inputs:
     description: 'GitHub token'
     default: ${{ github.token }}
     required: false
-perimissions: write-all
 runs:
   using: "composite"
   steps: 
@@ -34,14 +33,6 @@ runs:
         wget -nv https://github.com/quarto-dev/quarto-cli/releases/download/v1.1.75/quarto-1.1.75-linux-amd64.deb
         sudo dpkg -i quarto*.deb
         nbdev_docs
-    - name: Enable github pages
-      run: |
-        from ghapi.core import GhApi
-        from nbdev.config import get_config
-        cfg = get_config()
-        api = GhApi(owner=cfg.user, repo=cfg.repo, token="${{inputs.ghtoken}}")
-        res = api.enable_pages(branch='gh-pages')
-        print(res)
       shell: python
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
