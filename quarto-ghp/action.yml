@@ -24,6 +24,7 @@ runs:
           pip install -U git+https://github.com/fastai/fastcore.git
           pip install -U git+https://github.com/fastai/execnb.git
           pip install -U git+https://github.com/fastai/nbdev.git
+          pip install -U git+https://github.com/fastai/ghapi.git
         else
           pip install -U nbdev
         fi
@@ -32,6 +33,14 @@ runs:
         wget -nv https://github.com/quarto-dev/quarto-cli/releases/download/v1.1.75/quarto-1.1.75-linux-amd64.deb
         sudo dpkg -i quarto*.deb
         nbdev_docs
+    - name: Enable github pages
+      run: |
+        from ghapi.core import GhApi
+        from nbdev.config import get_config
+        cfg = get_config()
+        api = GhApi(owner=cfg.user, repo=cfg.repo, token="${{inputs.ghtoken}}")
+        api.enable_pages(branch='gh-pages')
+      shell: python
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
