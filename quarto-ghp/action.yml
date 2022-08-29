@@ -9,6 +9,7 @@ inputs:
     description: 'GitHub token'
     default: ${{ github.token }}
     required: false
+perimissions: write-all
 runs:
   using: "composite"
   steps: 
