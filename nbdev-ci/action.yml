@@ -17,8 +17,8 @@ runs:
     - uses: actions/setup-python@v3
       with:
         python-version: ${{ inputs.version }}
-        cache: "pip"
-        cache-dependency-path: settings.ini
+#        cache: "pip"
+#        cache-dependency-path: settings.ini
     - name: Test with nbdev
       env:
         USE_PRE: ${{ inputs.pre }}
@@ -33,7 +33,7 @@ runs:
         else
           pip install -U nbdev
         fi
-        pip install -qe ".[dev]"
+        pip install -e ".[dev]"
         echo "Check we are starting with clean git checkout"
         if [[ `git status --porcelain -uno` ]]; then
           git diff
