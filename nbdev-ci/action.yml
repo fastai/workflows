@@ -33,6 +33,7 @@ runs:
         else
           pip install -U nbdev
         fi
+        echo "Doing editable install..."
         pip install -e ".[dev]"
         echo "Check we are starting with clean git checkout"
         if [[ `git status --porcelain -uno` ]]; then
