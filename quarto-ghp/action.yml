@@ -46,7 +46,7 @@ runs:
                 pgs = api.repos.get_pages() # this will error if pages are not enabled yet
                 if pgs.build_type != 'legacy' or pgs.source.branch != 'gh-pages' or pgs.source.path != '/':
                   print(f'::error title="GitHub Pages not properly configured"::Please enable GitHub Pages to publish from the root of the `gh-pages` branch per these instructions - {url}')
-                sys.exit(1)
+                  sys.exit(1)
         else: api.enable_pages(branch='gh-pages')
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
