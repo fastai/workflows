@@ -35,10 +35,19 @@ runs:
     - name: Enable GitHub Pages
       shell: python
       run: |
-        import ghapi.core,nbdev.config
+        import ghapi.core,nbdev.config,sys
+        url="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-from-a-branch"
         api = ghapi.core.GhApi(owner=nbdev.config.get_config().user, repo=nbdev.config.get_config().repo, token="${{inputs.ghtoken}}")
-        if api.repos.get().visibility == 'private' and not api.repos.get().has_pages: print('::error title="Could not enable GitHub Pages Automatically"::For security reasons, we cannot automatically enable GitHub Pages on private repos.  Please enable GitHub Pages to publish from the root of the `gh-pages` branch per these instructions - https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-from-a-branch')
-        elif api.repos.get().visibility != 'private': api.enable_pages(branch='gh-pages')
+        if api.repos.get().visibility == 'private':
+            if not api.repos.get().has_pages: 
+                print(f'::error title="Could not enable GitHub Pages Automatically"::For security reasons, we cannot automatically enable GitHub Pages on private repos.  Please enable GitHub Pages to publish from the root of the `gh-pages` branch per these instructions - {url}')
+                sys.exit(1)
+            else: 
+                pgs = api.repos.get_pages() # this will error if pages are not enabled yet
+                if pgs.build_type != 'legacy' or pgs.source.branch != 'gh-pages' or pgs.source.path != '/':
+                  print(f'::error title="GitHub Pages not properly configured"::Please enable GitHub Pages to publish from the root of the `gh-pages` branch per these instructions - {url}')
+                sys.exit(1)
+        else: api.enable_pages(branch='gh-pages')
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
