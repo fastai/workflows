@@ -43,7 +43,9 @@ runs:
         try: res = api.enable_pages(branch='gh-pages')
         api = ghapi.core.GhApi(owner=nbdev.config.get_config().user, repo=nbdev.config.get_config().repo, token="${{inputs.ghtoken}}")
         try: api.enable_pages(branch='gh-pages')
-        except HTTPError as e: print(f'::error title="Could not enable GitHub Pages Automatically":: {msg}\n{e}')
+        except Exception as e: 
+          print(f'::error title="Could not enable GitHub Pages Automatically":: {msg}\n{e}')
+          sys.exit(1)
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
