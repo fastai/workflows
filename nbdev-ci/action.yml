@@ -30,6 +30,8 @@ runs:
           pip install -U git+https://github.com/fastai/ghapi.git
           pip install -U git+https://github.com/fastai/execnb.git
           pip install -U git+https://github.com/fastai/nbdev.git
+          wget $(curl https://latest.fast.ai/pre/quarto-dev/quarto-cli/linux-amd64.deb)
+          sudo dpkg -i quarto*.deb
         else
           pip install -U nbdev
         fi
