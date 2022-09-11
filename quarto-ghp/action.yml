@@ -43,6 +43,10 @@ runs:
         except Exception as e: 
           print(f'::error title="Could not enable GitHub Pages Automatically":: {msg}\n{e}')
           sys.exit(1)
+    - name: copy CNAME file into _docs if CNAME exists
+      run: |
+        sudo chmod -R 777 _docs/
+        cp CNAME _docs/ 2>/dev/null || :
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
