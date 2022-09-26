@@ -30,7 +30,7 @@ runs:
         else
           pip install -Uq nbdev
         fi
-        pip install -e ".[dev]"
+        test -f setup.py && pip install -e ".[dev]"
         nbdev_docs
     - name: Enable GitHub Pages
       shell: python
