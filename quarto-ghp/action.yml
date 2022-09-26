@@ -25,8 +25,7 @@ runs:
           pip install -Uq git+https://github.com/fastai/fastcore.git
           pip install -Uq git+https://github.com/fastai/execnb.git
           pip install -Uq git+https://github.com/fastai/nbdev.git
-          wget $(curl https://latest.fast.ai/pre/quarto-dev/quarto-cli/linux-amd64.deb)
-          # wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.2.126/quarto-1.2.126-linux-amd64.deb
+          wget -q $(curl https://latest.fast.ai/pre/quarto-dev/quarto-cli/linux-amd64.deb)
           sudo dpkg -i quarto*.deb
         else
           pip install -Uq nbdev
