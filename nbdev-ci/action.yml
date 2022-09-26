@@ -50,7 +50,7 @@ runs:
           echo -e "!!! Detected unstripped out notebooks\n!!!Remember to run nbdev_install_hooks"
           false
         fi
-        test -f setup.py && nbdev_export
+        nbdev_export
         if [[ `git status --porcelain -uno` ]]; then
           echo "::error::Notebooks and library are not in sync.  Please run nbdev_export."
           git status -uno
