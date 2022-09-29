@@ -24,6 +24,7 @@ runs:
         USE_PRE: ${{ inputs.pre }}
       shell: bash
       run: |
+        set -ux
         python -m pip install --upgrade pip
         if [ $USE_PRE ]; then
           pip install -U git+https://github.com/fastai/fastcore.git
