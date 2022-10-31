@@ -9,6 +9,10 @@ inputs:
     description: 'Version of python to set up'
     required: false
     default: '3.9'
+  skip_test:
+    description: 'Skip tests?'
+    required: false
+    default: ''
 
 runs:
   using: "composite"
@@ -22,6 +26,7 @@ runs:
     - name: Test with nbdev
       env:
         USE_PRE: ${{ inputs.pre }}
+        SKIP_TEST: ${{ inputs.skip_test }}
       shell: bash
       run: |
         set -ux
@@ -58,5 +63,6 @@ runs:
           git diff
           exit 1;
         fi
-        nbdev_test
-
+        if [ $USE_PRE ]; then
+          nbdev_test
+        fi
