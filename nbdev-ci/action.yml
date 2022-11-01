@@ -63,6 +63,6 @@ runs:
           git diff
           exit 1;
         fi
-        if [ $USE_PRE ]; then
+        if [ ! $SKIP_TEST ]; then
           nbdev_test
         fi
