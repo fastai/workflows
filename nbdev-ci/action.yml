@@ -9,6 +9,8 @@ inputs:
     description: 'Version of python to set up'
     required: false
     default: '3.9'
+  flags:
+    description: 'Space separated list of nbdev test flags to run that are normally ignored'
   skip_test:
     description: 'Skip tests?'
     required: false
@@ -64,5 +66,5 @@ runs:
           exit 1;
         fi
         if [ ! $SKIP_TEST ]; then
-          nbdev_test
+          nbdev_test --flags ${{ inputs.flags }}
         fi
