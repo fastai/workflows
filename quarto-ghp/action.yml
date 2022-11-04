@@ -5,15 +5,24 @@ inputs:
     description: 'Install prerelease nbdev/execnb from master?'
     required: false
     default: ''
+  version:
+    description: 'Version of python to set up'
+    required: false
+    default: '3.9'
   ghtoken:
     description: 'GitHub token'
     default: ${{ github.token }}
     required: false
+
 runs:
   using: "composite"
-  steps: 
+  steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
+      with:
+        python-version: ${{ inputs.version }}
+        cache: "pip"
+        cache-dependency-path: settings.ini
     - name: Install Dependencies
       env:
         USE_PRE: ${{ inputs.pre }}
@@ -41,7 +50,7 @@ runs:
         try:
           api = ghapi.core.GhApi(owner=nbdev.config.get_config().user, repo=nbdev.config.get_config().repo, token="${{inputs.ghtoken}}")
           api.enable_pages(branch='gh-pages')
-        except Exception as e: 
+        except Exception as e:
           print(f'::error title="Could not enable GitHub Pages Automatically":: {msg}\n{e}')
           sys.exit(1)
     - name: Deploy to GitHub Pages
@@ -54,4 +63,4 @@ runs:
         # You can swap them out with your own user credentials.
         user_name: github-actions[bot]
         user_email: 41898282+github-actions[bot]@users.noreply.github.com
-    
+

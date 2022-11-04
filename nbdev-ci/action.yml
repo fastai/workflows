@@ -9,6 +9,12 @@ inputs:
     description: 'Version of python to set up'
     required: false
     default: '3.9'
+  flags:
+    description: 'Space separated list of nbdev test flags to run that are normally ignored'
+  skip_test:
+    description: 'Skip tests?'
+    required: false
+    default: ''
 
 runs:
   using: "composite"
@@ -22,6 +28,7 @@ runs:
     - name: Test with nbdev
       env:
         USE_PRE: ${{ inputs.pre }}
+        SKIP_TEST: ${{ inputs.skip_test }}
       shell: bash
       run: |
         set -ux
@@ -58,5 +65,6 @@ runs:
           git diff
           exit 1;
         fi
-        nbdev_test
-
+        if [ ! $SKIP_TEST ]; then
+          nbdev_test --flags ${{ inputs.flags }}
+        fi
