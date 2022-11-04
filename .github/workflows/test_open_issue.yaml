@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     name: test-open-issue
     steps:
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v4
     - uses: fastai/workflows/open_issue@master
       id: open_issue
       with:

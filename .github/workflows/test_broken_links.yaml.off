@@ -10,7 +10,7 @@ on: [workflow_dispatch]
 #       - uses: actions/checkout@master
 #         with:
 #           repository: 'fastai/fastlinkcheck'  
-#       - uses: actions/setup-python@v2
+#       - uses: actions/setup-python@v4
 #       - name: check for broken links
 #         run: |
 #           pip install fastlinkcheck
@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@master
         with:
           repository: 'fastai/fastlinkcheck'  
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
       - name: check for broken links
         id: links
         uses: fastai/workflows/broken_links@master
@@ -67,7 +67,7 @@ jobs:
 #     runs-on: ubuntu-latest
 #     name: test-open-issue
 #     steps:
-#     - uses: actions/setup-python@v2
+#     - uses: actions/setup-python@v4
 #     - uses: fastai/workflows/open_issue@master
 #       id: open_issue
 #       with:
