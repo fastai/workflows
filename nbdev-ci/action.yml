@@ -13,6 +13,11 @@ inputs:
     description: 'Skip tests?'
     required: false
     default: ''
+  flags:
+    description: 'Space separated list of nbdev test flags to run that are normally ignored'
+    required: false
+    default: ''
+
 
 runs:
   using: "composite"
@@ -64,5 +69,5 @@ runs:
           exit 1;
         fi
         if [ ! $SKIP_TEST ]; then
-          nbdev_test
+          nbdev_test --flags ${{ inputs.flags }}
         fi
