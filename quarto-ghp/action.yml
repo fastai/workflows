@@ -14,10 +14,6 @@ inputs:
     default: ${{ github.token }}
     required: false
 
-permissions:
-  contents: write
-  pages: write
-
 runs:
   using: "composite"
   steps:
