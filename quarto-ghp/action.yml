@@ -42,16 +42,6 @@ runs:
         fi
         test -f setup.py && pip install -e ".[dev]"
         nbdev_docs
-    - name: Enable GitHub Pages
-      shell: python
-      run: |
-        import ghapi.core,nbdev.config,sys
-        msg="Please ensure GitHub Pages can publish from the root of the `gh-pages` branch per these instructions - https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-from-a-branch"
-        try:
-          api = ghapi.core.GhApi(owner=nbdev.config.get_config().user, repo=nbdev.config.get_config().repo, token="${{inputs.ghtoken}}")
-          api.repos.create_pages_site(source = {'branch': 'gh-pages'})
-        except Exception as e:
-          print(f'::warning title="Could not enable GitHub Pages Automatically":: {msg}\n{e}')
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
