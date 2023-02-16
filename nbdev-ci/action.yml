@@ -47,7 +47,7 @@ runs:
         echo "Doing editable install..."
         test -f setup.py && pip install -e ".[dev]"
         echo "Check we are starting with clean git checkout"
-        if [[ `git status --porcelain -uno` ]]; then
+        if [[ -n `git status --porcelain -uno` ]]; then
           git diff
           echo "git status is not clean"
           false
@@ -56,7 +56,7 @@ runs:
         nbdev_clean
         echo "Check that strip out was unnecessary"
         git status -s # display the status to see which nbs need cleaning up
-        if [[ `git status --porcelain -uno` ]]; then
+        if [[ -n `git status --porcelain -uno` ]]; then
           git status -uno
           echo -e "!!! Detected unstripped out notebooks\n!!!Remember to run nbdev_install_hooks"
           false
