@@ -59,6 +59,7 @@ runs:
         if [[ `git status --porcelain -uno` ]]; then
           git status -uno
           echo -e "!!! Detected unstripped out notebooks\n!!!Remember to run nbdev_install_hooks"
+          echo -e "This error can also happen if you are using an different version of nbdev relative to what is in CI.  Please try to upgrade nbdev with the command `pip install -U git+https://github.com/fastai/nbdev.git`"
           false
         fi
         nbdev_export
