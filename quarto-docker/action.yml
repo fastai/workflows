@@ -1,0 +1,49 @@
+name: 'quarto-docker'
+description: 'Build and push a Quarto Docker container to DockerHub.'
+inputs:
+  source: 
+    description: 'Full path to quarto file'
+    required: true
+  version:
+    description: 'The version to tag the image with.'
+    required: true
+  token:
+    description: 'The token to authenticate to docker registry'
+    required: true
+  username:
+    description: 'The username to authenticate to docker registry'
+    required: true
+  latest:
+    description: 'Apply the `latest` tag to the image.'
+    required: false
+    default: true
+  daily:
+    description: 'Apply the `daily` tag to the image.'
+    required: false
+    default: true
+
+
+runs:
+  using: "composite"
+  steps:
+    - name: Create DockerFile
+      shell: bash
+      run: |
+        cat << 'EOF' >> Dockerfile
+        FROM ubuntu:22.04
+        COPY ${{ inputs.source }} quarto-linux-amd64.deb
+        RUN dpkg -i quarto-linux-amd64.deb && rm quarto-linux-amd64.deb
+        EOF
+        
+    - if: ${{ inputs.latest }}
+      run: echo "LATEST_TAG=-t latest" >> $GITHUB_ENV
+      
+    - if: ${{ inputs.daily }}
+      run: echo "DAILY_TAG=-t daily" >> $GITHUB_ENV
+        
+    - name: Login To DockerHub
+      run: |
+        echo ${{ inputs.token }} | docker login -u ${{ inputs.username }} --password-stdin
+        docker build -t ${{ inputs.version }} ${{ env.LATEST_TAG }} ${{ env.DAILY_TAG }} .
+        docker push ${{ inputs.version }}
+ 
