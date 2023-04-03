@@ -39,12 +39,15 @@ runs:
         EOF
         
     - if: ${{ inputs.latest }}
+      shell: bash
       run: echo "LATEST_TAG=-t ${{ inputs.repo }}/latest" >> $GITHUB_ENV
       
     - if: ${{ inputs.daily }}
+      shell: bash
       run: echo "DAILY_TAG=-t ${{ inputs.repo }}/daily" >> $GITHUB_ENV
         
     - name: Login To DockerHub
+      shell: bash
       run: |
         echo ${{ inputs.token }} | docker login -u ${{ inputs.username }} --password-stdin
         docker build -t ${{ inputs.repo }}/${{ inputs.version }} ${{ env.LATEST_TAG }} ${{ env.DAILY_TAG }} .
