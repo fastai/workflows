@@ -29,6 +29,9 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - shell: bash
+      run: echo "BASE_NM=${{ inputs.username }}/${{ inputs.repo }}" >> $GITHUB_ENV
+      
     - name: Create DockerFile
       shell: bash
       run: |
@@ -40,16 +43,16 @@ runs:
         
     - if: ${{ inputs.latest }}
       shell: bash
-      run: echo "LATEST_TAG=-t ${{ inputs.repo }}/latest" >> $GITHUB_ENV
+      run: echo "LATEST_TAG=-t ${{ env.BASE_NM }}:latest" >> $GITHUB_ENV
       
     - if: ${{ inputs.daily }}
       shell: bash
-      run: echo "DAILY_TAG=-t ${{ inputs.repo }}/daily" >> $GITHUB_ENV
+      run: echo "DAILY_TAG=-t ${{ env.BASE_NM }}:daily" >> $GITHUB_ENV
         
     - name: Login To DockerHub
       shell: bash
       run: |
         echo ${{ inputs.token }} | docker login -u ${{ inputs.username }} --password-stdin
-        docker build -t ${{ inputs.repo }}/${{ inputs.version }} ${{ env.LATEST_TAG }} ${{ env.DAILY_TAG }} .
-        docker push ${{ inputs.repo }}/${{ inputs.version }}
+        docker build -t ${{ env.BASE_NM }}:${{ inputs.version }} ${{ env.LATEST_TAG }} ${{ env.DAILY_TAG }} .
+        docker push ${{ env.BASE_NM }} --all-tags
  
