@@ -13,6 +13,9 @@ inputs:
   username:
     description: 'The username to authenticate to docker registry'
     required: true
+  repo:
+    description: 'The dockerhub repo you want to push to'
+    required: true
   latest:
     description: 'Apply the `latest` tag to the image.'
     required: false
@@ -36,14 +39,14 @@ runs:
         EOF
         
     - if: ${{ inputs.latest }}
-      run: echo "LATEST_TAG=-t latest" >> $GITHUB_ENV
+      run: echo "LATEST_TAG=-t ${{ inputs.repo }}/latest" >> $GITHUB_ENV
       
     - if: ${{ inputs.daily }}
-      run: echo "DAILY_TAG=-t daily" >> $GITHUB_ENV
+      run: echo "DAILY_TAG=-t ${{ inputs.repo }}/daily" >> $GITHUB_ENV
         
     - name: Login To DockerHub
       run: |
         echo ${{ inputs.token }} | docker login -u ${{ inputs.username }} --password-stdin
-        docker build -t ${{ inputs.version }} ${{ env.LATEST_TAG }} ${{ env.DAILY_TAG }} .
+        docker build -t ${{ inputs.repo }}/${{ inputs.version }} ${{ env.LATEST_TAG }} ${{ env.DAILY_TAG }} .
         docker push ${{ inputs.version }}
  
