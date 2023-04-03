@@ -19,7 +19,7 @@ inputs:
   latest:
     description: 'Apply the `latest` tag to the image.'
     required: false
-    default: true
+    default: false
   daily:
     description: 'Apply the `daily` tag to the image.'
     required: false
@@ -41,11 +41,11 @@ runs:
         RUN dpkg -i quarto-linux-amd64.deb && rm quarto-linux-amd64.deb
         EOF
         
-    - if: ${{ inputs.latest }}
+    - if: ${{ inputs.latest && inputs.latest != 'false' }}
       shell: bash
       run: echo "LATEST_TAG=-t ${{ env.BASE_NM }}:latest" >> $GITHUB_ENV
       
-    - if: ${{ inputs.daily }}
+    - if: ${{ inputs.daily && inputs.daily != 'false' }}
       shell: bash
       run: echo "DAILY_TAG=-t ${{ env.BASE_NM }}:daily" >> $GITHUB_ENV
         
