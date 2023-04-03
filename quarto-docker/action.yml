@@ -51,5 +51,5 @@ runs:
       run: |
         echo ${{ inputs.token }} | docker login -u ${{ inputs.username }} --password-stdin
         docker build -t ${{ inputs.repo }}/${{ inputs.version }} ${{ env.LATEST_TAG }} ${{ env.DAILY_TAG }} .
-        docker push ${{ inputs.version }}
+        docker push ${{ inputs.repo }}/${{ inputs.version }}
  
