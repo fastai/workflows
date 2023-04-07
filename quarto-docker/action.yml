@@ -14,7 +14,7 @@ inputs:
     description: 'The username to authenticate to docker registry'
     required: true
   org:
-    description: 'The GitHub orginization that will host Docker image'.
+    description: 'The GitHub orginization that will host Docker image'
     required: true
   name:
     description: 'The name of the Docker image'
