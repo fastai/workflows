@@ -17,11 +17,11 @@ inputs:
     description: 'Space separated list of nbdev test flags to run that are normally ignored'
     required: false
     default: ''
-  lfs:
+  enable_git_lfs:
     description: 'Enable Git LFS?'
     required: false
     default: 'false'
-  ghtoken:
+  github_token:
     description: 'GitHub token'
     required: false
     default: '${{ github.token }}'
@@ -31,8 +31,8 @@ runs:
   steps: 
     - uses: actions/checkout@v3
       with:
-        lfs: "${{ inputs.lfs }}"  
-        token: "${{ inputs.ghtoken }}"
+        lfs: "${{ inputs.enable_git_lfs }}"  
+        token: "${{ inputs.github_token }}"
     - uses: actions/setup-python@v4
       with:
         python-version: ${{ inputs.version }}
