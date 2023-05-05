@@ -13,6 +13,10 @@ inputs:
     description: 'Skip tests?'
     required: false
     default: ''
+  prod_editable_install:
+    description: 'Use editable install without dev extras?'
+    required: false
+    default: 'false'
   flags:
     description: 'Space separated list of nbdev test flags to run that are normally ignored'
     required: false
@@ -31,6 +35,7 @@ runs:
       env:
         USE_PRE: ${{ inputs.pre }}
         SKIP_TEST: ${{ inputs.skip_test }}
+        PROD_EDITABLE_INSTALL: ${{ inputs.prod_editable_install }}
         FLAGS: ${{ inputs.flags }}
       shell: bash
       run: |
@@ -45,7 +50,11 @@ runs:
           pip install -U nbdev
         fi
         echo "Doing editable install..."
-        test -f setup.py && pip install -e ".[dev]"
+        if [ $PROD_EDITABLE_INSTALL == "true" ]; then
+          test -f setup.py && pip install -e "."
+        else
+          test -f setup.py && pip install -e ".[dev]"
+        fi
         echo "Check we are starting with clean git checkout"
         if [[ `git status --porcelain -uno` ]]; then
           git diff
