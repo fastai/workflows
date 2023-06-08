@@ -13,6 +13,10 @@ inputs:
     description: 'GitHub token'
     default: ${{ github.token }}
     required: false
+  publish_branch:
+    description: 'Branch name to publish docs to'
+    required: false
+    default: 'gh-pages'
 
 runs:
   using: "composite"
@@ -52,4 +56,4 @@ runs:
         # You can swap them out with your own user credentials.
         user_name: github-actions[bot]
         user_email: 41898282+github-actions[bot]@users.noreply.github.com
-
+        publish_branch: ${{ inputs.publish_branch }}
