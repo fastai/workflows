@@ -11,7 +11,7 @@ inputs:
     description: 'path to rsync to'
     required: true
   ssh_key:
-    description: "SSH key for rsync" 
+    description: "SSH key for rsync"
     required: true
   delete:
     description: "Toggle the --delete flag on or off for rsync.  Set to any value to enable.  Disabled by default."
@@ -21,9 +21,14 @@ inputs:
     description: 'Install prerelease nbdev/execnb from master?'
     required: false
     default: ''
+  torch_cpu:
+    description: "Install PyTorch CPU instead of PyTorch Cuda.  Has no effect if PyTorch isn't a requirement.  Enabled by defaut."
+    required: false
+    default: true
+
 runs:
   using: "composite"
-  steps: 
+  steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
     - name: Install deps, build docs, and sync
@@ -31,6 +36,7 @@ runs:
         SSH_KEY: ${{ inputs.ssh_key }}
         USE_PRE: ${{ inputs.pre }}
         delete: "${{ inputs.delete }}"
+        TORCH_CPU: "${{ inputs.torch_cpu }}"
       run: |
         mkdir -p ~/.ssh
         chmod 700 ~/.ssh
@@ -45,7 +51,11 @@ runs:
         else
           pip install -U nbdev
         fi
-        pip install -e ".[dev]"
+        if [ $TORCH_CPU ]; then
+          pip install -e ".[dev]" --extra-index-url https://download.pytorch.org/whl/cpu
+        else
+          pip install -e ".[dev]"
+        fi
         nbdev_docs
         rsync $(echo ${delete:+'--delete'}) -az _docs/ ${{ inputs.username }}@${{ inputs.hostname }}:${{ inputs.dest_path }}/
       shell: bash
