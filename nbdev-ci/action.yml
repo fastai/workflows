@@ -17,10 +17,14 @@ inputs:
     description: 'Space separated list of nbdev test flags to run that are normally ignored'
     required: false
     default: ''
+  torch_cpu:
+    description: "Install PyTorch CPU instead of PyTorch Cuda.  Has no effect if PyTorch isn't a requirement.  Enabled by defaut."
+    required: false
+    default: true
 
 runs:
   using: "composite"
-  steps: 
+  steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
       with:
@@ -32,6 +36,7 @@ runs:
         USE_PRE: ${{ inputs.pre }}
         SKIP_TEST: ${{ inputs.skip_test }}
         FLAGS: ${{ inputs.flags }}
+        TORCH_CPU: "${{ inputs.torch_cpu }}"
       shell: bash
       run: |
         set -ux
@@ -45,7 +50,11 @@ runs:
           pip install -U nbdev
         fi
         echo "Doing editable install..."
-        test -f setup.py && pip install -e ".[dev]"
+        if [ $TORCH_CPU ]; then
+          test -f setup.py && pip install -e ".[dev]" --extra-index-url https://download.pytorch.org/whl/cpu
+        else
+          test -f setup.py && pip install -e ".[dev]"
+        fi
         echo "Check we are starting with clean git checkout"
         if [[ `git status --porcelain -uno` ]]; then
           git diff
