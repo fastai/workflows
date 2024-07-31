@@ -8,7 +8,7 @@ inputs:
   version:
     description: 'Version of python to set up'
     required: false
-    default: '3.9'
+    default: '3.10'
   ghtoken:
     description: 'GitHub token'
     default: ${{ github.token }}
@@ -17,6 +17,10 @@ inputs:
     description: 'Branch name to publish docs to'
     required: false
     default: 'gh-pages'
+  torch_cpu:
+    description: "Install PyTorch CPU instead of PyTorch Cuda.  Has no effect if PyTorch isn't a requirement.  Enabled by defaut."
+    required: false
+    default: true
 
 runs:
   using: "composite"
@@ -30,6 +34,7 @@ runs:
     - name: Install Dependencies
       env:
         USE_PRE: ${{ inputs.pre }}
+        TORCH_CPU: "${{ inputs.torch_cpu }}"
       shell: bash
       run: |
         set -ux
@@ -44,7 +49,11 @@ runs:
         else
           pip install -Uq nbdev
         fi
-        test -f setup.py && pip install -e ".[dev]"
+        if [ $TORCH_CPU ]; then
+          test -f setup.py && pip install -e ".[dev]" --extra-index-url https://download.pytorch.org/whl/cpu
+        else
+          test -f setup.py && pip install -e ".[dev]"
+        fi
         nbdev_docs
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3

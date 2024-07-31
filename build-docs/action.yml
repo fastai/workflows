@@ -11,28 +11,38 @@ inputs:
     description: 'path to rsync to'
     required: true
   ssh_key:
-    description: "SSH key for rsync" 
+    description: "SSH key for rsync"
     required: true
   delete:
     description: "Toggle the --delete flag on or off for rsync.  Set to any value to enable.  Disabled by default."
     required: false
     default: ''
+  torch_cpu:
+    description: "Install PyTorch CPU instead of PyTorch Cuda.  Has no effect if PyTorch isn't a requirement.  Enabled by defaut."
+    required: false
+    default: true
+
 runs:
   using: "composite"
-  steps: 
+  steps:
     - name: Create docs
       shell: bash
       env:
         JEKYLL_ENV: 'production'
         SSH_KEY: ${{ inputs.ssh_key }}
         delete: "${{ inputs.delete }}"
+        TORCH_CPU: "${{ inputs.torch_cpu }}"
       run: |
         cp -r docs_src docs
         pip install -Uq nbdev fastcore
-        pip install -Uq -e .[dev]
+        if [ $TORCH_CPU ]; then
+          pip install -Uq -e .[dev] --extra-index-url https://download.pytorch.org/whl/cpu
+        else
+          pip install -Uq -e .[dev]
+        fi
         pip install -U 'jupyter_client<7'
         nbdev_build_docs
-        cd docs 
+        cd docs
         bundle i
         bundle exec jekyll build --strict_front_matter
         echo "$SSH_KEY" > ~/.ssh/id_rsa
