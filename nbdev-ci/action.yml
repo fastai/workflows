@@ -8,7 +8,7 @@ inputs:
   version:
     description: 'Version of python to set up'
     required: false
-    default: '3.9'
+    default: '3.10'
   skip_test:
     description: 'Skip tests?'
     required: false
