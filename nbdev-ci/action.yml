@@ -5,7 +5,11 @@ inputs:
     description: 'Install prerelease nbdev/execnb from master?'
     required: false
     default: ''
-  version:
+  nbdev_version:
+    description: 'What specific nbdev version to install from pypi? (default to latest)'
+    required: false
+    default: ''
+  python_version:
     description: 'Version of python to set up'
     required: false
     default: '3.10'
@@ -33,12 +37,13 @@ runs:
       if: ${{ inputs.skip_checkout != 'true' }}
     - uses: actions/setup-python@v4
       with:
-        python-version: ${{ inputs.version }}
+        python-version: ${{ inputs.python_version }}
         cache: "pip"
         cache-dependency-path: settings.ini
     - name: Test with nbdev
       env:
         USE_PRE: ${{ inputs.pre }}
+        NBDEV_VERSION: ${{ inputs.nbdev_version }}
         SKIP_TEST: ${{ inputs.skip_test }}
         FLAGS: ${{ inputs.flags }}
         TORCH_CPU: "${{ inputs.torch_cpu }}"
@@ -51,6 +56,8 @@ runs:
           pip install -U git+https://github.com/fastai/ghapi.git
           pip install -U git+https://github.com/fastai/execnb.git
           pip install -U git+https://github.com/fastai/nbdev.git
+        elif [ $NBDEV_VERSION ]; then
+          pip install nbdev==$NBDEV_VERSION
         else
           pip install -U nbdev
         fi
