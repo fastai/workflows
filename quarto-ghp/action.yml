@@ -13,6 +13,10 @@ inputs:
     description: 'GitHub token'
     default: ${{ github.token }}
     required: false
+  publish_branch:
+    description: 'Branch name to publish docs to'
+    required: false
+    default: 'gh-pages'
   torch_cpu:
     description: "Install PyTorch CPU instead of PyTorch Cuda.  Has no effect if PyTorch isn't a requirement.  Enabled by defaut."
     required: false
@@ -61,4 +65,5 @@ runs:
         # You can swap them out with your own user credentials.
         user_name: github-actions[bot]
         user_email: 41898282+github-actions[bot]@users.noreply.github.com
+        publish_branch: ${{ inputs.publish_branch }}
 
