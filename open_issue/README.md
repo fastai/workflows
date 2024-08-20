@@ -23,11 +23,11 @@ inputs:
     description: 'Setting this to any value will result in not an opening a new issue if there is an existing issue with the same title.'
     required: false
 outputs:
-  bool_new_issue_created: 
+  bool_new_issue_created:
     description: "Returns 'True' or 'False' depending on if new issue was created.  Can only be 'False' if input skip_if_exists_flag is specified."
-  related_issue_num: 
+  related_issue_num:
     description: "Returns issue number of issue that was created.  If a new issue is not created because of the skip_if_exists_flag, the issue number of corresponding existing issue is returned."
-  related_issue_url: 
+  related_issue_url:
     description: "Same as related_issue_num except returns the URL for the issue instead of the issue number."
 ```
 
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     name: test-open-issue
     steps:
-    - uses: actions/setup-python@v4
+    - uses: actions/setup-python@v5
     - uses: fastai/workflows/open_issue@master
       id: open_issue
       with:
@@ -56,7 +56,7 @@ jobs:
         skip_if_exists_flag: "Yes" # omit this input completely if you do not want to trigger this flag
     - name: see outputs
       run: |
-        echo bool_new_issue_created ${{ steps.open_issue.outputs.bool_new_issue_created }} 
+        echo bool_new_issue_created ${{ steps.open_issue.outputs.bool_new_issue_created }}
         echo related_issue_num ${{ steps.open_issue.outputs.related_issue_num }}
-        echo related_issue_url ${{ steps.open_issue.outputs.related_issue_url }} 
+        echo related_issue_url ${{ steps.open_issue.outputs.related_issue_url }}
 ```
