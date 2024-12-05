@@ -39,6 +39,7 @@ runs:
     - name: Test with nbdev
       env:
         USE_PRE: ${{ inputs.pre }}
+        OBJC_DISABLE_INITIALIZE_FORK_SAFETY: YES
         SKIP_TEST: ${{ inputs.skip_test }}
         FLAGS: ${{ inputs.flags }}
         TORCH_CPU: "${{ inputs.torch_cpu }}"
