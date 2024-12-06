@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     name: test-open-issue
     steps:
-    - uses: actions/setup-python@v4
+    - uses: actions/setup-python@v5
     - uses: fastai/workflows/open_issue@master
       id: open_issue
       with:
@@ -20,6 +20,6 @@ jobs:
         skip_if_exists_flag: ${{ matrix.skip }}
     - name: check outputs
       run: |
-        echo bool_new_issue_created ${{ steps.open_issue.outputs.bool_new_issue_created }} 
+        echo bool_new_issue_created ${{ steps.open_issue.outputs.bool_new_issue_created }}
         echo related_issue_num ${{ steps.open_issue.outputs.related_issue_num }}
-        echo related_issue_url ${{ steps.open_issue.outputs.related_issue_url }} 
+        echo related_issue_url ${{ steps.open_issue.outputs.related_issue_url }}
